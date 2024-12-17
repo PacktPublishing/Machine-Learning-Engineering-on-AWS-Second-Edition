@@ -1,0 +1,101 @@
+Statement,Sentiment score,Sentiment tag,Is Spam
+Anyone interested?,,,True
+I love this!,0.73,POSITIVE,False
+"It’s fine, neither good nor bad.",-0.06,NEUTRAL,False
+Very disappointed with this.,-0.95,NEGATIVE,False
+Terrible experience.,-0.73,NEGATIVE,False
+Terrible experience.,-0.61,NEGATIVE,False
+It works as expected.,-0.18,NEUTRAL,False
+Terrible experience.,-0.59,NEGATIVE,False
+"It’s fine, neither good nor bad.",-0.05,NEUTRAL,False
+Great service!,0.63,POSITIVE,False
+Just checking in,,,True
+I would not recommend this to anyone.,-0.79,NEGATIVE,False
+It works as expected.,-0.08,NEUTRAL,False
+I hate this product.,-0.64,NEGATIVE,False
+It works as expected.,0.07,NEUTRAL,False
+The product is okay.,-0.1,NEUTRAL,False
+BUMP,,,True
+Great service!,0.51,POSITIVE,False
+Nothing special about it.,-0.03,NEUTRAL,False
+Great service!,0.68,POSITIVE,False
+Great service!,0.86,POSITIVE,False
+Bump to top,,,True
+This is awful.,-0.83,NEGATIVE,False
+Great service!,0.72,POSITIVE,False
+Nothing special about it.,0.14,NEUTRAL,False
+Bump to top,,,True
+It works as expected.,-0.03,NEUTRAL,False
+Nothing special about it.,0.05,NEUTRAL,False
+This is awful.,-0.89,NEGATIVE,False
+BUMP,,,True
+"It’s fine, neither good nor bad.",0.07,NEUTRAL,False
+I would not recommend this to anyone.,-0.73,NEGATIVE,False
+Anyone interested?,,,True
+The product is okay.,-0.08,NEUTRAL,False
+UP,,,True
+I would not recommend this to anyone.,-0.72,NEGATIVE,False
+I haven’t decided yet.,-0.07,NEUTRAL,False
+"It’s fine, neither good nor bad.",-0.09,NEUTRAL,False
+Highly recommend this product!,0.75,POSITIVE,False
+Terrible experience.,-0.81,NEGATIVE,False
+BUMP,,,True
+The product is okay.,0.15,NEUTRAL,False
+I love this!,0.6,POSITIVE,False
+I hate this product.,-0.57,NEGATIVE,False
+This product is amazing!,0.79,POSITIVE,False
+This is awful.,-0.83,NEGATIVE,False
+This is the best purchase I've made.,0.59,POSITIVE,False
+This product is amazing!,0.76,POSITIVE,False
+"It’s fine, neither good nor bad.",0.11,NEUTRAL,False
+I hate this product.,-0.8,NEGATIVE,False
+It works as expected.,0.15,NEUTRAL,False
+I love this!,0.76,POSITIVE,False
+This product is amazing!,0.87,POSITIVE,False
+This product is amazing!,0.89,POSITIVE,False
+I haven’t decided yet.,0.16,NEUTRAL,False
+Highly recommend this product!,0.5,POSITIVE,False
+This is the best purchase I've made.,0.54,POSITIVE,False
+Great service!,0.65,POSITIVE,False
+The product is okay.,0.12,NEUTRAL,False
+I hate this product.,-0.88,NEGATIVE,False
+Just checking in,,,True
+This product is amazing!,0.59,POSITIVE,False
+I would not recommend this to anyone.,-0.74,NEGATIVE,False
+I haven’t decided yet.,0.2,NEUTRAL,False
+Nothing special about it.,0.16,NEUTRAL,False
+Bump to top,,,True
+Very disappointed with this.,-0.99,NEGATIVE,False
+Terrible experience.,-0.52,NEGATIVE,False
+Very disappointed with this.,-0.96,NEGATIVE,False
+Highly recommend this product!,0.68,POSITIVE,False
+Nothing special about it.,-0.11,NEUTRAL,False
+Anyone interested?,,,True
+I hate this product.,-0.73,NEGATIVE,False
+Nothing special about it.,0.13,NEUTRAL,False
+Terrible experience.,-0.85,NEGATIVE,False
+I love this!,0.92,POSITIVE,False
+"It’s fine, neither good nor bad.",-0.15,NEUTRAL,False
+This is awful.,-0.8,NEGATIVE,False
+Great service!,0.81,POSITIVE,False
+This is the best purchase I've made.,0.87,POSITIVE,False
+This product is amazing!,0.8,POSITIVE,False
+UP,,,True
+Anyone interested?,,,True
+This is the best purchase I've made.,0.97,POSITIVE,False
+This is the best purchase I've made.,0.88,POSITIVE,False
+"It’s fine, neither good nor bad.",0.08,NEUTRAL,False
+Terrible experience.,-0.94,NEGATIVE,False
+Anyone interested?,,,True
+This is the best purchase I've made.,0.64,POSITIVE,False
+Terrible experience.,-0.72,NEGATIVE,False
+Great service!,0.93,POSITIVE,False
+I haven’t decided yet.,-0.03,NEUTRAL,False
+It works as expected.,0.1,NEUTRAL,False
+This is the best purchase I've made.,0.59,POSITIVE,False
+The product is okay.,-0.01,NEUTRAL,False
+It works as expected.,-0.1,NEUTRAL,False
+I hate this product.,-0.52,NEGATIVE,False
+Very disappointed with this.,-0.75,NEGATIVE,False
+I would not recommend this to anyone.,-0.98,NEGATIVE,False
+I hate this product.,-0.52,NEGATIVE,False
