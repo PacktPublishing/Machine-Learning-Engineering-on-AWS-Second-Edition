@@ -1,0 +1,30 @@
+statement,score,tag,is_spam,date
+"It’s fine, neither good nor bad.",-0.09,NEUTRAL,FALSE,2025-01-01
+I hate this product.,-0.73,NEGATIVE,FALSE,2025-01-09
+The product is okay.,-0.1,NEUTRAL,FALSE,2025-01-17
+This is the best purchase I've made.,0.59,POSITIVE,FALSE,2025-02-05
+Terrible experience.,-0.94,NEGATIVE,FALSE,2025-02-09
+Very disappointed with this.,-0.96,NEGATIVE,FALSE,2025-02-14
+It works as expected.,-0.08,NEUTRAL,FALSE,2025-02-24
+This is the best purchase I've made.,0.88,POSITIVE,FALSE,2025-03-14
+Highly recommend this product!,0.68,POSITIVE,FALSE,2025-03-20
+This is awful.,-0.83,NEGATIVE,FALSE,2025-03-27
+This product is amazing!,0.89,POSITIVE,FALSE,2025-04-03
+Anyone interested?,,,TRUE,2025-04-11
+Terrible experience.,-0.73,NEGATIVE,FALSE,2025-05-07
+It works as expected.,0.1,NEUTRAL,FALSE,2025-05-15
+BUMP,,,TRUE,2025-05-26
+"It’s fine, neither good nor bad.",0.11,NEUTRAL,FALSE,2025-06-28
+I would not recommend this to anyone.,-0.74,NEGATIVE,FALSE,2025-07-09
+I hate this product.,-0.64,NEGATIVE,FALSE,2025-07-12
+The product is okay.,0.12,NEUTRAL,FALSE,2025-08-04
+Terrible experience.,-0.85,NEGATIVE,FALSE,2025-08-17
+Bump to top,,,TRUE,2025-08-23
+I haven’t decided yet.,0.16,NEUTRAL,FALSE,2025-09-14
+It works as expected.,-0.18,NEUTRAL,FALSE,2025-09-29
+Nothing special about it.,0.14,NEUTRAL,FALSE,2025-10-05
+Nothing special about it.,0.16,NEUTRAL,FALSE,2025-10-22
+Great service!,0.51,POSITIVE,FALSE,2025-11-06
+Very disappointed with this.,-0.75,NEGATIVE,FALSE,2025-11-13
+I haven’t decided yet.,-0.03,NEUTRAL,FALSE,2025-12-06
+I love this!,0.76,POSITIVE,FALSE,2025-12-18
