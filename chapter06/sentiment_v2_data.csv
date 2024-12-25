@@ -1,0 +1,86 @@
+unique_id,statement,score,tag,is_spam,date
+a32d0194-ff3b-4f26-a2c3-6f2e0d2f13ac,"It’s fine, neither good nor bad.",-0.06,NEUTRAL,False,2024-01-02
+72866349-6806-4560-892f-ee120a17a0d0,This is the best purchase I've made.,0.54,POSITIVE,False,2024-01-19
+c94769c9-0e01-4e3c-af52-1fa553b241eb,It works as expected.,0.15,NEUTRAL,False,2024-01-22
+6b94eac6-1aa0-4dcb-b3f1-c5884f196882,I would not recommend this to anyone.,-0.79,NEGATIVE,False,2024-02-10
+b0081f56-85b0-4e89-aaba-1ea950cff9a3,I haven’t decided yet.,-0.07,NEUTRAL,False,2024-02-23
+375e56a2-1c4a-4f89-ae2a-d7029a6b5f67,I love this!,0.92,POSITIVE,False,2024-02-28
+a8b04b94-fbef-4f57-a7e4-c97173f4c52f,Great service!,0.65,POSITIVE,False,2024-03-01
+4d49c2e1-2df2-460b-8fe3-adaba441db43,Very disappointed with this.,-0.95,NEGATIVE,False,2024-03-18
+5fdd6dcc-0aed-4847-acf3-5605a0541d3e,This is the best purchase I've made.,0.64,POSITIVE,False,2024-03-26
+5dad8e29-4810-4883-8bb0-09ae909eb009,I would not recommend this to anyone.,-0.98,NEGATIVE,False,2024-04-03
+fac4523e-9934-4537-b38b-19acef89ddd7,I haven’t decided yet.,0.2,NEUTRAL,False,2024-04-12
+029e22b7-9fe2-4de6-9194-1eeb99e76570,Great service!,0.68,POSITIVE,False,2024-04-15
+cd789107-35f9-4de3-8f44-5b8a18b9a6af,I hate this product.,-0.8,NEGATIVE,False,2024-04-28
+cec37c84-4683-4f84-b6ed-ea245d664892,This product is amazing!,0.59,POSITIVE,False,2024-06-13
+6ab01aae-ee8a-4baf-b6e2-5112506a17e6,"It’s fine, neither good nor bad.",-0.05,NEUTRAL,False,2024-06-30
+691d5f54-f053-430d-9c59-76eb86a9909c,Very disappointed with this.,-0.99,NEGATIVE,False,2024-07-01
+c1c304e7-b25d-4666-83eb-d04e0531ce62,This is the best purchase I've made.,0.59,POSITIVE,False,2024-07-04
+bb819ca3-a8ea-48f2-80e4-f2e54473e58d,This product is amazing!,0.79,POSITIVE,False,2024-07-23
+554d8424-ca04-4289-817f-14b7f0ad7812,It works as expected.,-0.03,NEUTRAL,False,2024-07-29
+86db4ae5-00a9-456b-9e3a-47cf292eed39,Terrible experience.,-0.81,NEGATIVE,False,2024-08-01
+db53dd24-a2b7-41e5-9ea6-be63918f535a,Terrible experience.,-0.61,NEGATIVE,False,2024-08-25
+b034d21d-c87f-4b30-8542-627a2a348446,I would not recommend this to anyone.,-0.73,NEGATIVE,False,2024-09-15
+0c6f949c-7fbf-462c-8b28-7d0729d4ff71,This is awful.,-0.83,NEGATIVE,False,2024-09-28
+b354a7a0-dfa4-4f58-ad1e-16f01a997b64,It works as expected.,0.07,NEUTRAL,False,2024-10-07
+ff8af294-21cf-402a-8514-448daf12e9e2,Nothing special about it.,0.13,NEUTRAL,False,2024-10-12
+328b0c79-40aa-43d9-b698-88e5be52b5f9,The product is okay.,0.15,NEUTRAL,False,2024-10-15
+559f472a-e1f9-4f6c-8a69-54463b1fdfd3,Terrible experience.,-0.52,NEGATIVE,False,2024-10-19
+4aa3d530-4a3c-4a1b-84ed-f36e2d4775c5,Great service!,0.63,POSITIVE,False,2024-11-03
+d6afac51-b2cd-4618-9e33-33b12ff35b6c,Great service!,0.81,POSITIVE,False,2024-11-25
+bdb3c9c0-da86-457d-a052-5b527951a747,Terrible experience.,-0.72,NEGATIVE,False,2024-12-08
+8f7e80f6-35a3-49c4-bbef-cc49fb124d25,I hate this product.,-0.57,NEGATIVE,False,2024-12-12
+8cf58319-09e8-4317-9824-cdba6fc57932,Nothing special about it.,-0.03,NEUTRAL,False,2024-12-25
+33a82108-dfaa-4f4a-873c-b8524bf9afb0,"It’s fine, neither good nor bad.",-0.09,NEUTRAL,False,2025-01-01
+f2743384-610f-4277-af8e-994ebc2357e2,I hate this product.,-0.73,NEGATIVE,False,2025-01-09
+c1cd992b-54d1-41ab-a99f-451ed893816e,The product is okay.,-0.1,NEUTRAL,False,2025-01-17
+366fe053-154c-4804-9b53-86d747bd53a8,This is the best purchase I've made.,0.59,POSITIVE,False,2025-02-05
+13080924-3d3e-4e6d-9201-fce504ddf6b7,Terrible experience.,-0.94,NEGATIVE,False,2025-02-09
+64ffe2cd-6d8c-4172-9022-fb5d68143669,Very disappointed with this.,-0.96,NEGATIVE,False,2025-02-14
+d94bf043-8bf5-495c-9c2f-ae695d00ea14,It works as expected.,-0.08,NEUTRAL,False,2025-02-24
+148a1deb-5955-4336-8a85-42bd7cee4ac5,This is the best purchase I've made.,0.88,POSITIVE,False,2025-03-14
+04934b4f-78f0-4646-9962-55148d0db0c3,Highly recommend this product!,0.68,POSITIVE,False,2025-03-20
+a04f8808-a8ab-4389-954e-dbb5acb0aa92,This is awful.,-0.83,NEGATIVE,False,2025-03-27
+fc1da49c-58a6-4392-8ad2-9afc71fe81fc,This product is amazing!,0.89,POSITIVE,False,2025-04-03
+4fc5d719-f625-459b-94d8-5b23924ea249,Terrible experience.,-0.73,NEGATIVE,False,2025-05-07
+625d937f-ec2a-4277-91c0-b948b1b475dd,It works as expected.,0.1,NEUTRAL,False,2025-05-15
+eb2e5670-7e70-47f8-b5b3-0a9f8ee63f47,"It’s fine, neither good nor bad.",0.11,NEUTRAL,False,2025-06-28
+56661e2a-bb01-4dd1-82aa-232c8c28712e,I would not recommend this to anyone.,-0.74,NEGATIVE,False,2025-07-09
+73b8a107-5af3-4aa6-9f31-572db9679d26,I hate this product.,-0.64,NEGATIVE,False,2025-07-12
+a134b8c4-8d3e-4bb8-8414-76179b0e6d2f,The product is okay.,0.12,NEUTRAL,False,2025-08-04
+b71c9ab7-55c8-45f1-8a59-32b5b0e839db,Terrible experience.,-0.85,NEGATIVE,False,2025-08-17
+0cf50da0-f160-4915-a56f-74a7e1974dc0,I haven’t decided yet.,0.16,NEUTRAL,False,2025-09-14
+4ccbafe6-981e-4d0f-8b5b-b35b39bfb2bd,It works as expected.,-0.18,NEUTRAL,False,2025-09-29
+75275bed-003c-4026-b0b5-6ae05dfb3468,Nothing special about it.,0.14,NEUTRAL,False,2025-10-05
+70b738a9-201f-4221-a5ae-7eec23198cea,Nothing special about it.,0.16,NEUTRAL,False,2025-10-22
+bd3d622b-e82f-493f-bc3c-9832d81fe78d,Great service!,0.51,POSITIVE,False,2025-11-06
+ea6338df-1e1a-492d-8f01-c61e21bf2334,Very disappointed with this.,-0.75,NEGATIVE,False,2025-11-13
+271e1766-c0e8-46e3-a98f-2d2215067ebf,I haven’t decided yet.,-0.03,NEUTRAL,False,2025-12-06
+ebd706bb-485a-45e5-884c-66c97bb3e246,I love this!,0.76,POSITIVE,False,2025-12-18
+35ce3303-f520-4dbe-9759-ef87f261c3f3,I love this!,0.6,POSITIVE,False,2023-01-14
+0e84ff9b-2845-48b7-9674-d4da4f3f3fee,The product is okay.,-0.08,NEUTRAL,False,2023-02-04
+d36d5a11-138d-49a5-bcb8-acd2a889493a,It works as expected.,-0.1,NEUTRAL,False,2023-02-15
+05fde437-4630-43ac-821a-77d86ead113a,This is awful.,-0.89,NEGATIVE,False,2023-03-09
+bd2aabd2-e388-4616-acf9-90358091e76b,This is the best purchase I've made.,0.97,POSITIVE,False,2023-03-17
+9c47757f-35be-420e-92bd-6c7eebd5a2b1,The product is okay.,-0.01,NEUTRAL,False,2023-04-13
+e0bfe69b-ff8a-43f5-babc-8e9e857d3c6a,I would not recommend this to anyone.,-0.72,NEGATIVE,False,2023-04-21
+b647c226-acb1-4d1e-ae43-25a5bcc08aa9,"It’s fine, neither good nor bad.",-0.15,NEUTRAL,False,2023-05-19
+a668404e-6524-453f-9587-94dd981224be,Great service!,0.86,POSITIVE,False,2023-05-22
+d8935957-3be8-4823-8875-548bdb1e663d,Highly recommend this product!,0.75,POSITIVE,False,2023-06-04
+ea407d66-bd3b-4ca9-b0a8-2208e71c7593,Highly recommend this product!,0.5,POSITIVE,False,2023-06-19
+8f1caa71-9914-40d9-b3c7-b9c4ea306e4e,"It’s fine, neither good nor bad.",0.07,NEUTRAL,False,2023-07-17
+b0c27eef-3a61-4985-b63c-30bb9bd1b0e0,This is awful.,-0.8,NEGATIVE,False,2023-07-30
+4e7a6855-1bd6-4286-b031-a36d42ea6229,Great service!,0.72,POSITIVE,False,2023-08-11
+f7c93fe9-7d53-49be-b19f-f0f274b4fc90,"It’s fine, neither good nor bad.",0.08,NEUTRAL,False,2023-08-14
+7a212bd4-bbe9-4374-b68b-f1682c24f1cd,This product is amazing!,0.87,POSITIVE,False,2023-09-11
+f7047d8b-2242-420c-8eba-09032406878c,I hate this product.,-0.52,NEGATIVE,False,2023-09-21
+3f71dbf2-97f4-4e28-85a4-b2be09cbd2b4,Nothing special about it.,-0.11,NEUTRAL,False,2023-09-25
+ea3fb396-d583-422e-8c29-2a58ff7a581c,Nothing special about it.,0.05,NEUTRAL,False,2023-10-01
+1800ed58-4f77-4af9-948a-d925258f1165,This is the best purchase I've made.,0.87,POSITIVE,False,2023-10-08
+38be50a2-b3b3-4d87-9d29-2252787e2051,This product is amazing!,0.76,POSITIVE,False,2023-10-17
+666eb59c-b3f3-4629-afe9-42a4efaca715,I hate this product.,-0.52,NEGATIVE,False,2023-10-24
+fec7045f-b55e-459d-bc6a-5cb1b7c0cfbd,Great service!,0.93,POSITIVE,False,2023-11-10
+2b2bb5d2-b289-4650-ace9-7f0dc765db98,I love this!,0.73,POSITIVE,False,2023-11-21
+13be5b71-8018-49c9-9958-780e1179f031,This product is amazing!,0.8,POSITIVE,False,2023-12-02
+cac2e72f-7ae9-49d6-bc12-0bd38847b805,Terrible experience.,-0.59,NEGATIVE,False,2023-12-15
+c22491e7-c701-4a21-84a9-a4a942d781ff,I hate this product.,-0.88,NEGATIVE,False,2023-12-30
