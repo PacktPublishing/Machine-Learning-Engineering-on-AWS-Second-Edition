@@ -29,6 +29,12 @@ def log(log_string, logger=logger):
 
 def log_line(logger=logger):
     logger.info("█" * 50)
+
+
+def log_section(log_string, logger=logger):
+    log_line(logger=logger)
+    log(log_string=log_string, logger=logger)
+    log_line(logger=logger)
     
 
 def get_tokenizer_and_model(model_name, device=DEVICE):
@@ -107,13 +113,10 @@ def deduplicate(list_of_statements):
 
 
 def main():
-    log_line()
-    log("[START]")
-    log_line()
-        
-    log_line()
-    log("[PROCESSING ARGS]")
-    log_line()
+    log_section("[START]")
+    
+    log_section("[PROCESSING ARGS]")
+    
     args = process_args()
     log_line()
     log(f"args.source_language = {args.source_language}")
@@ -123,18 +126,14 @@ def main():
     first_lang = args.source_language
     second_langs = ast.literal_eval(args.languages_for_back_translation)
     
-    log_line()
-    log("[LOADING INPUT CSV FILE]")
-    log_line()
+    log_section("[LOADING INPUT CSV FILE]")
     df_of_statements = load_input("/opt/ml/processing/input/input.csv")
     log_line()
     total_rows = len(df_of_statements)
     log(f"original statements count: {total_rows}")
     log_line()
     
-    log_line()
-    log("[GENERATE NEW STATEMENTS (BACK TRANSLATION)]")
-    log_line()
+    log_section("[GENERATE NEW STATEMENTS (BACK TRANSLATION)]")
     
     new_statements = []
     for index, row in df_of_statements.iterrows():
@@ -152,15 +151,11 @@ def main():
     print(f"unique generated statements count: {len(unique_list)}")
     log_line()
     
-    log_line()
-    log("[SAVING OUTPUT TO A CSV FILE]")
-    log_line()
+    log_section("[SAVING OUTPUT TO A CSV FILE]")
     df = pd.DataFrame(unique_list)
     df.to_csv("/opt/ml/processing/output/output.csv", index=False, header=False)
     
-    log_line()
-    log("[END]")
-    log_line()
+    log_section("[END]")
     
     
 if __name__ == "__main__":
