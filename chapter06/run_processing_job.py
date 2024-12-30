@@ -77,7 +77,7 @@ def main():
     )
 
     log_section("RUN PROCESSOR")
-    processor.run(code=code_filename, inputs=inputs, outputs=outputs, arguments=arguments, wait=True)
+    processor.run(code=code_filename, inputs=inputs, outputs=outputs, wait=True)
 
     log_section("CHECK OUTPUT")
     output = processor.latest_job.outputs[0]
