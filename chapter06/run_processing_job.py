@@ -46,7 +46,6 @@ def process_args():
     parser.add_argument('--script', type=str, default="scripts/token_counter.py")
     parser.add_argument('--data', type=str, default="input/input.csv")
     parser.add_argument('--output', type=str, default="output/output.csv")
-    parser.add_argument('--tokenizer', type=str, default="bert-base-uncased")
     
     arguments, _ = parser.parse_known_args()
     
@@ -58,7 +57,6 @@ def main():
     args = process_args()
     input_file = args.data
     output_file = args.output
-    tokenizer = args.tokenizer
     role = args.role
     code_filename = args.script
     
@@ -67,7 +65,7 @@ def main():
     bucket = get_bucket()
     inputs = [ProcessingInput(source=input_file, destination="/opt/ml/processing/input")]
     outputs = [ProcessingOutput(output_name = output_file, source="/opt/ml/processing/output", destination=f's3://{bucket}/mlengineering/output/')]
-    arguments = ["--tokenizer", tokenizer]
+    arguments = []
     instance_type = 'ml.p3.2xlarge'
 
     processor = HuggingFaceProcessor(
