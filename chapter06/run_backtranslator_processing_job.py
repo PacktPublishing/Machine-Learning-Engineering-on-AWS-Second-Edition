@@ -68,7 +68,7 @@ def main():
     bucket = get_bucket()
     inputs = [ProcessingInput(source=input_file, destination="/opt/ml/processing/input")]
     outputs = [ProcessingOutput(output_name = output_file, source="/opt/ml/processing/output", destination=f's3://{bucket}/mlengineering/output/')]
-    arguments = ["--batch-size", batch_size]
+    arguments = ["--batch_size", batch_size]
     instance_type = 'ml.p3.2xlarge'
 
     processor = HuggingFaceProcessor(
