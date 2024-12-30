@@ -49,6 +49,7 @@ def process_args():
     parser.add_argument('--batch_size', type=str, default="10")
     
     arguments, _ = parser.parse_known_args()
+    log(str(arguments))
     
     return arguments
 
