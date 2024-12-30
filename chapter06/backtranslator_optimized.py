@@ -7,6 +7,7 @@ import ast
 import logging
 import sys
 import numpy as np
+import math
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
@@ -149,13 +150,17 @@ def main():
     log_line()
     
     batch_size = int(args.batch_size)
-    batches = np.array_split(df_of_statements, len(df_of_statements) // batch_size)
+    total_f = float(len(df_of_statements))
+    batch_size_f = float(batch_size)
+    split = int(math.ceil(total_f/batch_size_f))
+
+    batches = np.array_split(df_of_statements, split)
     new_statements = []
     total_batches = len(batches)
     
     for index, batch in enumerate(batches):
         log_line()
-        log(f"PROCESSING BATCH {index + 1} of {total_batches} ({batch_size} per batch)")
+        log(f"BATCH {index + 1} of {total_batches}")
         log_line()
         statement_list = batch[0].to_list()
         for second_lang in second_langs:
