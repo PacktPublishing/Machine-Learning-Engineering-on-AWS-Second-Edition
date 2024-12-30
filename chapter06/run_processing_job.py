@@ -81,11 +81,7 @@ def main():
 
     log_section("CHECK OUTPUT")
     output = processor.latest_job.outputs[0]
-    destination = output.destination
-    output_path = destination + "output.csv"
-
-    output_df = pd.read_csv(output_path, header=None)
-    print(output_df)
-
+    print(output)
+    
 
 main()
