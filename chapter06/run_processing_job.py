@@ -81,7 +81,7 @@ def main():
 
     log_section("CHECK OUTPUT")
     output = processor.latest_job.outputs[0]
-    print(output)
+    print(output.destination)
     
 
 main()
