@@ -499,13 +499,13 @@ print(df)
 df.to_csv("tmp/sentiments_data.csv", index=False)
 ```
 
+```
+exit
+```
+
 ## Ingesting data into a SageMaker Feature Store
 
 ### Preparing the data to be ingested into the Feature Store
-
-```
-mkdir -p tmp
-```
 
 ```
 ipython
