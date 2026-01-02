@@ -498,3 +498,372 @@ df = SQL(f"SELECT * FROM { table }")
 print(df)
 df.to_csv("tmp/sentiments_data.csv", index=False)
 ```
+
+## Ingesting data into a SageMaker Feature Store
+
+### Preparing the data to be ingested into the Feature Store
+
+```
+mkdir -p tmp
+```
+
+```
+ipython
+```
+
+```
+import pandas as pd
+df = pd.read_csv("tmp/sentiments_data.csv")
+```
+
+```
+df = df.drop('is_spam', axis=1)
+```
+
+```
+from datetime import datetime
+
+def get_event_time(date_string):
+    obj = datetime.strptime(date_string, '%Y-%m-%d')
+    output = float(obj.timestamp())
+    return output
+```
+
+```
+first_event_time = get_event_time('2024-01-01')
+print(first_event_time)
+df['event_time'] = first_event_time
+print(df)
+```
+
+```
+df.to_csv("tmp/feature_store_01.csv", index=False)
+```
+
+```
+second_event_time = get_event_time('2025-01-01')
+
+for index, row in df.iterrows():
+    if row['tag'] == 'NEUTRAL':
+        if row['score'] >= 0:
+            new_tag = 'POSITIVE'
+        else:
+            new_tag = 'NEGATIVE'
+        
+        df.at[index, 'tag'] = new_tag
+        df.at[index, 'event_time'] = second_event_time
+```
+
+```
+print(df)
+```
+
+```
+df.to_csv("tmp/feature_store_02.csv", index=False)
+```
+
+```
+exit
+```
+
+### Ingesting data into the Feature Store
+
+```
+pip install sagemaker
+```
+
+```
+ipython
+```
+
+```
+from boto3 import Session as BotoSession
+boto_session = BotoSession()
+region_name = boto_session.region_name
+client = boto_session.client
+
+c1 = client(service_name='sagemaker', 
+            region_name=region_name)
+c2 = client(service_name='sagemaker-featurestore-runtime',
+            region_name=region_name)
+```
+
+```
+from sagemaker.session import Session as SageMakerSession
+
+store_session = SageMakerSession(
+   boto_session=boto_session,
+   sagemaker_client=c1,
+   sagemaker_featurestore_runtime_client=c2
+)
+```
+
+```
+feature_group_name = 'sentiments-feature-group'
+```
+
+```
+from sagemaker.feature_store.feature_group import (
+    FeatureGroup
+)
+
+feature_group = FeatureGroup(
+    name=feature_group_name,
+    sagemaker_session=store_session
+)
+```
+
+```
+import pandas as pd
+df_01 = pd.read_csv("tmp/feature_store_01.csv")
+df_02 = pd.read_csv("tmp/feature_store_02.csv")
+```
+
+```
+feature_group.load_feature_definitions(data_frame=df_01)
+```
+
+```
+iam_role_arn = '<IAM ROLE ARN>'
+```
+
+```
+s3_bucket_name = '<NAME OF NEW S3 BUCKET>'
+s3_input = f"s3://{ s3_bucket_name }/input"
+s3_output = f"s3://{ s3_bucket_name }/output"
+!aws s3 mb { s3_bucket_name }
+```
+
+```
+feature_group.create(
+    s3_uri=s3_input,
+    record_identifier_name="unique_id",
+    event_time_feature_name="event_time",
+    role_arn=iam_role_arn,
+    enable_online_store=True
+)
+```
+
+```
+feature_group.describe()
+```
+
+```
+def get_feature_group_status(fg=feature_group):
+    status = fg.describe().get("FeatureGroupStatus")
+    return status
+```
+
+```
+from time import sleep
+
+print(f"Status: {get_feature_group_status()}")
+while get_feature_group_status() == 'Creating':
+    print('Pending feature group creation')
+    print('Sleeping for 10 seconds')
+    sleep(10)
+
+print(f"Status: {get_feature_group_status()}")
+```
+
+```
+feature_group.ingest(
+    data_frame=df_01, max_workers=3, wait=True
+)
+feature_group.ingest(
+    data_frame=df_02, max_workers=3, wait=True
+)
+```
+
+## Adding searchable metadata to the features
+
+```
+feature_group.update_feature_metadata(
+    feature_name="unique_id",
+    description="UUID of the record",
+)
+```
+
+```
+from sagemaker.feature_store.inputs import (
+    FeatureParameter
+)
+
+pas = [
+    FeatureParameter("generated", "true"),
+    FeatureParameter("another-key", "another-value"),
+]
+feature_group.update_feature_metadata(
+    feature_name="unique_id",
+    description="UUID of the record",
+    parameter_additions=pas
+)
+```
+
+```
+feature_group.describe_feature_metadata(
+    feature_name="unique_id"
+)
+```
+
+```
+descriptions = {
+    'unique_id': 'UUID of the record',
+    'statement': 'Statement or comment of a user',
+    'score': 'Sentiment score',
+    'tag': 'Sentiment tag based on score',
+    'date': 'When the statement or comment was shared',
+    'event_time': 'Feature store event time value'
+}
+```
+
+```
+for key, value in descriptions.items():
+    feature_group.update_feature_metadata(
+        feature_name=key,
+        description=value,
+    )
+```
+
+```
+def describe(feature_name, fg=feature_group):
+    return fg.describe_feature_metadata(
+        feature_name=feature_name
+    ).get('Description')
+
+def get_descriptions(feature_group=feature_group):
+    details = feature_group.describe()    
+    fd = details.get('FeatureDefinitions')
+    flds = list(map(lambda f: f ['FeatureName'], fd))
+    output = {}
+    for field in flds:
+        output[field] = describe(field)
+    return output
+```
+
+```
+get_descriptions()
+```
+
+### Searching features in an existing feature group using the metadata
+
+```
+c1.search(Resource="FeatureMetadata")
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'FeatureType', 
+         'Operator': 'Equals', 
+         'Value': 'Fractional'}
+    ]}
+)
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'Description', 
+         'Operator': 'Contains', 
+         'Value': 'comment'}
+    ]}
+)
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'Parameters.generated', 
+         'Operator': 'Equals', 
+         'Value': 'true'}
+    ]}
+)
+```
+
+## Retrieving data from the online and offline Feature Stores
+
+### Retrieving data from the online Feature Store
+
+```
+first_id = df_01.iloc[0].unique_id
+```
+
+```
+c2.get_record(
+    FeatureGroupName=feature_group.name,
+    RecordIdentifierValueAsString=first_id
+)
+```
+
+```
+table = feature_group.athena_query().table_name
+```
+
+```
+details = feature_group.describe()
+config = details.get('OfflineStoreConfig')
+config_s3_uri = config['S3StorageConfig']['S3Uri']
+!aws s3 ls { config_s3_uri } --recursive
+```
+
+```
+def SQL(statement, group=feature_group, no_df=False):
+    print("---" * 20)
+    print(f"QUERY: {statement}\n")
+    print("---" * 20)
+    q = group.athena_query()
+    q.run(query_string=statement,
+          output_location=s3_output)
+    q.wait()
+    print("---" * 20)
+    output = None
+    if not no_df:
+        output = q.as_dataframe()
+
+    return output 
+```
+
+```
+SQL(f"SELECT * FROM { table }")
+```
+
+```
+SQL(f"SELECT COUNT(*) FROM { table }")
+```
+
+```
+SQL(f"""
+WITH latest_versions AS (
+    SELECT *,ROW_NUMBER() 
+    OVER (
+        PARTITION BY unique_id 
+        ORDER BY event_time DESC
+   ) AS rn
+    FROM {table}
+)
+SELECT * FROM latest_versions WHERE rn = 1;
+""")
+```
+
+```
+SQL(f"""
+CREATE OR REPLACE VIEW latest_versions_view AS
+WITH latest_versions AS (
+    SELECT *,ROW_NUMBER() 
+       OVER (
+           PARTITION BY unique_id 
+           ORDER BY event_time DESC
+       ) AS rn
+    FROM { table }
+)
+SELECT * FROM latest_versions WHERE rn = 1;
+""", no_df=True)
+```
+
+```
+SQL("SELECT * FROM latest_versions_view")
+```
