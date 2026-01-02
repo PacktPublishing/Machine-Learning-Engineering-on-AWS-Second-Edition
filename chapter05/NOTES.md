@@ -1,4 +1,4 @@
-<img width="468" height="22" alt="image" src="https://github.com/user-attachments/assets/1fa6976c-71e1-42bb-b29a-31f3a0379a41" /><img width="468" height="128" alt="image" src="https://github.com/user-attachments/assets/3dbd037a-5b57-4b04-905c-cb6ab658adc6" />## Technical requirements
+## Technical requirements
 
 ```
 {
