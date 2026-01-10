@@ -152,6 +152,14 @@ aws s3 cp $PARQUET_FILE s3://$S3_BUCKET_NAME/
 ]
 ```
 
+### Connecting to the EMR cluster
+
+```
+KEY_FILE="emr-cluster-key-pair.pem"
+chmod 400 $KEY_FILE
+ssh -i $KEY_FILE hadoop@<EMR NODE>
+```
+
 ## Performing Apache Iceberg queries on S3 tables with Apache Spark
 
 ### Accessing the Spark shell
@@ -396,7 +404,6 @@ ipython
 ```
 athena_output_s3_bucket_name = "<BUCKET NAME>"
 output_bucket = "s3://" + athena_output_s3_bucket_name
-!aws s3 mb {output_bucket}
 ```
 
 ```
@@ -503,12 +510,26 @@ df.to_csv("tmp/sentiments_data.csv", index=False)
 exit
 ```
 
+```
+UPLOAD_BUCKET="<NAME OF NEW S3 BUCKET>"
+aws s3 mb s3://$UPLOAD_BUCKET
+```
+
+```
+aws s3 cp tmp/sentiments_data.csv s3://$UPLOAD_BUCKET/
+```
+
 ## Ingesting data into a SageMaker Feature Store
 
 ### Preparing the data to be ingested into the Feature Store
 
 ```
-ipython
+UPLOAD_BUCKET="<NAME OF EXISTING S3 BUCKET>"
+aws s3 cp s3://$UPLOAD_BUCKET/sentiments_data.csv .
+```
+
+```
+cp sentiments_data.csv SageMaker/
 ```
 
 ```
@@ -545,17 +566,9 @@ second_event_time = get_event_time('2025-01-01')
 
 for index, row in df.iterrows():
     if row['tag'] == 'NEUTRAL':
-        if row['score'] >= 0:
-            new_tag = 'POSITIVE'
-        else:
-            new_tag = 'NEGATIVE'
-        
+        new_tag = 'POSITIVE'        
         df.at[index, 'tag'] = new_tag
         df.at[index, 'event_time'] = second_event_time
-```
-
-```
-print(df)
 ```
 
 ```
@@ -569,14 +582,6 @@ exit
 ### Ingesting data into the Feature Store
 
 ```
-pip install sagemaker
-```
-
-```
-ipython
-```
-
-```
 from boto3 import Session as BotoSession
 boto_session = BotoSession()
 region_name = boto_session.region_name
@@ -584,14 +589,16 @@ client = boto_session.client
 
 c1 = client(service_name='sagemaker', 
             region_name=region_name)
-c2 = client(service_name='sagemaker-featurestore-runtime',
+
+service_name='sagemaker-featurestore-runtime'
+c2 = client(service_name=service_name,
             region_name=region_name)
 ```
 
 ```
-from sagemaker.session import Session as SageMakerSession
+from sagemaker.session import Session as SMSession
 
-store_session = SageMakerSession(
+store_session = SMSession(
    boto_session=boto_session,
    sagemaker_client=c1,
    sagemaker_featurestore_runtime_client=c2
@@ -624,14 +631,20 @@ feature_group.load_feature_definitions(data_frame=df_01)
 ```
 
 ```
-iam_role_arn = '<IAM ROLE ARN>'
+from sagemaker import get_execution_role 
+iam_role_arn = get_execution_role()
 ```
 
 ```
-s3_bucket_name = '<NAME OF NEW S3 BUCKET>'
-s3_input = f"s3://{ s3_bucket_name }/input"
-s3_output = f"s3://{ s3_bucket_name }/output"
-!aws s3 mb { s3_bucket_name }
+import boto3
+
+region = boto3.session.Session().region_name
+sc = boto3.client('sts')
+account_id = sc.get_caller_identity().get('Account')
+s3_bucket_name = f"sagemaker-{region}-{account_id}"
+
+s3_input = f"s3://{ s3_bucket_name }/store/input"
+s3_output = f"s3://{ s3_bucket_name }/store/output"
 ```
 
 ```
@@ -693,6 +706,7 @@ pas = [
     FeatureParameter("generated", "true"),
     FeatureParameter("another-key", "another-value"),
 ]
+
 feature_group.update_feature_metadata(
     feature_name="unique_id",
     description="UUID of the record",
