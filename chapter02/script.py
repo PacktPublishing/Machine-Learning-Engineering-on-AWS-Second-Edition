@@ -5,7 +5,7 @@ from strands.models.sagemaker import SageMakerAIModel
 
 
 REGION = 'us-east-1'
-KNOWLEDGEBASE_ID = 'OPVG3TVSVR'
+KNOWLEDGEBASE_ID = '<SPECIFY KNOWLEDGEBASE ID>'
 ENDPOINT_NAME = 'sagemaker-endpoint-00'
 
 
@@ -16,6 +16,17 @@ SYSTEM_PROMPT = (
     "Do not answer without calling a tool first."
 )
 
+prompt = """
+Get the current month and then tell me more about the Xironal Flux Displacement and Subatomic Event Polarization stored in the knowledge base which happened during the same quarter the last few years. Then, using the generated output, create 1 directory for each month of the said quarter (for example, JAN_2025) and create a text file (for example, info.txt) inside each directory that contains 1-2 sentences relevant to what happened that month. Make sure that the number of directories created is equal to the number of months in the quarter (for example, only 3 months in a quarter).
+
+I am expecting the following file and folder structure to look like this:
+
+JAN_2024/
+    info.txt
+
+FEB_2024/
+    info.txt
+"""
 
 @tool
 def search_vector_database(query: str) -> str:
@@ -69,8 +80,6 @@ def main():
         tools=[search_vector_database, current_time, shell], 
         system_prompt=SYSTEM_PROMPT
     )
-
-    prompt = """Get the current month and then tell me more about the Xironal Flux Displacement and Subatomic Event Polarization stored in the knowledge base which happened during the same quarter the last few years. Then, using the generated output, create 1 directory per month and create a text file inside each directory that contains information relevant to that month."""
 
     result = agent(prompt)
 
