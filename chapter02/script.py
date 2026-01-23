@@ -3,13 +3,27 @@ from strands import Agent, tool
 from strands_tools import calculator, current_time, shell
 from strands.models.sagemaker import SageMakerAIModel
 
+
+REGION = 'us-east-1'
+KNOWLEDGEBASE_ID = 'OPVG3TVSVR'
+ENDPOINT_NAME = 'sagemaker-endpoint-00'
+
+
+SYSTEM_PROMPT = (
+    "You are a RAG agent. When a user asks you a question you will first check it in your knowledge base (if you can't answer it from the current conversation memory)."
+    "You MUST use as many tools as possible to answer the user's question."
+    "You MUST use the shell tool when working with files and directories."
+    "Do not answer without calling a tool first."
+)
+
+
 @tool
-def search_vector_database(query: str, region: str, knowledgebase_id: str) -> str:
-    runtime = boto3.client("bedrock-agent-runtime", region_name=region)
+def search_vector_database(query: str) -> str:
+    runtime = boto3.client("bedrock-agent-runtime", region_name=REGION)
 
     try:        
         response = runtime.retrieve(            
-            knowledgeBaseId=knowledgebase_id,            
+            knowledgeBaseId=KNOWLEDGEBASE_ID,            
             retrievalQuery={"text": query},            
             retrievalConfiguration={                
                 "vectorSearchConfiguration": {                    
@@ -26,17 +40,14 @@ def search_vector_database(query: str, region: str, knowledgebase_id: str) -> st
     except Exception as e:        
         return f"Error: {str(e)}"
 
-def main():
-    region = input("Enter the AWS region (e.g., us-east-1): ")
-    knowledgebase_id = input("Enter the Knowledge Base ID: ")
-    endpoint_name = input("Enter the SageMaker endpoint name: ")
 
+def get_model():
     EPConfig = SageMakerAIModel.SageMakerAIEndpointConfig
     PLConfig = SageMakerAIModel.SageMakerAIPayloadSchema
 
     endpoint_config = EPConfig(
-        endpoint_name=endpoint_name, 
-        region_name=region
+        endpoint_name=ENDPOINT_NAME, 
+        region_name=REGION
     )
 
     payload_config = PLConfig(
@@ -49,15 +60,12 @@ def main():
         payload_config=payload_config
     )
 
-    SYSTEM_PROMPT = (
-        "You are a RAG agent. When a user asks you a question you will first check it in your knowledge base (if you can't answer it from the current conversation memory)."
-        "You MUST use as many tools as possible to answer the user's question."
-        "You MUST use the shell tool when working with files and directories."
-        "Do not answer without calling a tool first."
-    )
+    return model
 
+
+def main():
     agent = Agent(
-        model=model,
+        model=get_model(),
         tools=[search_vector_database, current_time, shell], 
         system_prompt=SYSTEM_PROMPT
     )
@@ -67,6 +75,7 @@ def main():
     result = agent(prompt)
 
     print(result)
+
 
 if __name__ == "__main__":
     main()
