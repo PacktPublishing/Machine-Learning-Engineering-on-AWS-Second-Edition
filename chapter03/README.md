@@ -307,6 +307,97 @@ s3_test_path = "s3://{}/{}/data/{}".format(
 ```
 
 ## Training an XGBoost binary classifier
+
+```
+from sagemaker.core.shapes import (
+    Channel,
+    DataSource,
+    S3DataSource,
+    OutputDataConfig,
+    StoppingCondition,
+)
+
+from sagemaker.core import image_uris
+```
+
+```
+image = image_uris.retrieve(
+    framework="xgboost", 
+    region=region, 
+    image_scope="training",
+    version="1.7-1"
+)
+
+print(image)
+```
+
+```
+hyperparameters = {
+    "objective": "binary:logistic",
+    "num_round": "50",
+    "eval_metric": "error",
+}
+```
+
+```
+base_job_name = "xgb-" + prefix
+```
+
+```
+model_trainer = ModelTrainer(
+    base_job_name=base_job_name,
+    hyperparameters=hyperparameters,
+    training_image=image,
+    training_input_mode="File",
+    role=role,
+    output_data_config=OutputDataConfig(
+        s3_output_path=s3_output_path
+    ),
+    stopping_condition=StoppingCondition(
+        max_runtime_in_seconds=600
+    ),
+)
+```
+
+```
+train_data_source=DataSource(
+    s3_data_source=S3DataSource(
+        s3_data_type="S3Prefix",
+        s3_uri=s3_train_input_path,               
+        s3_data_distribution_type="FullyReplicated",
+    )
+)
+
+val_data_source=DataSource(
+    s3_data_source=S3DataSource(
+        s3_data_type="S3Prefix",
+        s3_uri=s3_val_input_path,            
+        s3_data_distribution_type="FullyReplicated",
+    )
+)
+```
+
+```
+model_trainer.train(
+    input_data_config=[
+        Channel(
+            channel_name="train",
+            content_type="csv",
+            compression_type="None",
+            record_wrapper_type="None",
+            data_source=train_data_source,
+        ),
+        Channel(
+            channel_name="validation",
+            content_type="csv",
+            compression_type="None",
+            record_wrapper_type="None",
+            data_source=val_data_source,
+        )
+    ],
+)
+```
+
 ## Deploying an XGBoost model to a real-time inference endpoint
 ## Setting up BERT fine-tuning with SageMaker JumpStart
 ## Using a smaller dataset for fine-tuning
