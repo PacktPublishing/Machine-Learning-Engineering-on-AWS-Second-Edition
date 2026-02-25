@@ -768,4 +768,43 @@ trainer.input_data_config[0]
 ```
 
 ## Running the BERT model fine-tuning job
+
+```
+conf = trainer.input_data_config[1]
+model_tar_gz = conf.data_source.s3_data_source.s3_uri
+model_tar_gz
+```
+
+```
+!aws s3 cp {model_tar_gz} model.tar.gz
+```
+
+```
+!mkdir -p model_files
+!tar -xzf model.tar.gz -C model_files
+```
+
+```
+ls -lahF model_files
+```
+
+```
+trainer.training_image
+```
+
+```
+%%time
+trainer.train()
+```
+
+```
+data_config = trainer.output_data_config
+output_path = data_config.s3_output_path
+output_path
+```
+
+```
+!aws s3 ls {output_path} --recursive | grep output
+```
+
 ## Deploying the fine-tuned model to a real-time inference endpoint
