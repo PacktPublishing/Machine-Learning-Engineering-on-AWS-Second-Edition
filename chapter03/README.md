@@ -399,6 +399,186 @@ model_trainer.train(
 ```
 
 ## Deploying an XGBoost model to a real-time inference endpoint
+
+```
+import numpy as np
+import pandas as pd
+from xgboost import XGBClassifier
+```
+
+```
+test_data
+```
+
+```
+sample_input = test_data.iloc[0].to_numpy()
+sample_input
+```
+
+```
+sample_output = np.array([1.0])
+```
+
+```
+schema_builder = SchemaBuilder(
+    sample_input=sample_input,
+    sample_output=sample_output
+)
+```
+
+```
+class XGBoostModelSpec(InferenceSpec):
+    def load(self, model_dir: str):
+        m = XGBClassifier()
+        m.load_model(model_dir + "/xgboost-model")
+        return m
+
+    def invoke(self, 
+               input_object: object, 
+               model: object):
+        pred_proba = model.predict_proba(input_object)
+        pred = np.argmax(pred_proba, axis=1)
+        return pred
+```
+
+```
+inference_spec = XGBoostModelSpec()
+```
+
+```
+instance_type = "ml.m5.xlarge"
+```
+
+```
+model_builder = ModelBuilder(
+    model=model_trainer,
+    role_arn=role,
+    image_uri=image,
+    inference_spec=inference_spec,
+    schema_builder=schema_builder,
+    instance_type=instance_type,
+)
+```
+
+```
+model_builder.build()
+```
+
+```
+endpoint_name = f"xgb-{prefix}-ep"
+
+predictor = model_builder.deploy(
+    endpoint_name=endpoint_name
+)
+```
+
+```
+from sagemaker.core.deserializers import (
+    JSONDeserializer
+)
+
+from sagemaker.core.serializers import (
+    CSVSerializer,
+)
+
+predictor.serializer = CSVSerializer()
+predictor.deserializer = JSONDeserializer()
+```
+
+```
+import json
+
+result = predictor.invoke(
+    body=[-1.0, 1.5],
+    content_type="text/csv"
+)
+
+result.body
+```
+
+```
+import json
+
+result = predictor.invoke(
+    body=[1.0, -1.0],
+    content_type="text/csv"
+)
+
+result.body
+```
+
+```
+import json
+
+def invoke_endpoint(a, b, predictor=predictor):
+    payload = f"{a},{b}"
+
+    result = predictor.invoke(
+        body=payload,
+        content_type="text/csv"
+    )
+
+    probability = float(result.body)
+
+    prediction = int(probability > 0.5)
+
+    return prediction
+```
+
+```
+invoke_endpoint(-1.0, 1.5)
+```
+
+```
+invoke_endpoint(1.0, -1.0)
+```
+
+```
+predictions = []
+
+for _, row in var['test'].iterrows():
+    pred = invoke_endpoint(row['a'], row['b'])
+    predictions.append(pred)
+
+
+var['test'].insert(0, 'predicted_value', predictions)
+```
+
+```
+var['test']
+```
+
+```
+from sklearn.metrics import (
+    accuracy_score, 
+    precision_score, 
+    recall_score, 
+    f1_score, 
+    confusion_matrix
+)
+
+target = var['test']['target']
+predicted = var['test']['predicted_value']
+
+accuracy = accuracy_score(target, predicted)
+precision = precision_score(target, predicted)
+recall = recall_score(target, predicted)
+f1 = f1_score(target, predicted)
+conf_matrix = confusion_matrix(target, predicted)
+```
+
+```
+print(f"Accuracy: {accuracy}")
+print(f"Precision: {precision}")
+print(f"Recall: {recall}")
+print(f"F1 Score: {f1}")
+print(f"Confusion Matrix:\n{conf_matrix}")
+```
+
+```
+predictor.delete()
+```
+
 ## Setting up BERT fine-tuning with SageMaker JumpStart
 ## Using a smaller dataset for fine-tuning
 ## Running the BERT model fine-tuning job
