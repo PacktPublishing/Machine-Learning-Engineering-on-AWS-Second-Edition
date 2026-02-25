@@ -116,6 +116,196 @@ copy_model_server_file()
 ```
 
 ## Preparing a Synthetic Dataset for Binary Classification
+
+```
+var = {}
+```
+
+```
+import pandas as pd
+from sklearn.datasets import make_moons
+
+def generate_dataset(samples=1000, 
+                     noise=0.4,  
+                     random_state=200):
+    params = {
+        'n_samples': samples, 
+        'noise': noise,
+        'random_state': random_state
+    }
+    X, y = make_moons(**params)
+    
+    return pd.DataFrame(
+        dict(target=y, a=X[:,0], b=X[:,1])
+    )
+```
+
+```
+var['dataset'] = generate_dataset()
+var['dataset']
+```
+
+```
+from matplotlib import pyplot
+
+def plot_dataset(dataset, 
+                 colors = {0:'red', 1:'blue'}):
+    fig, ax = pyplot.subplots()
+    grouped = dataset.groupby('target')
+    
+    for key, group in grouped:
+        params = {
+            'ax': ax, 
+            'kind': 'scatter', 
+            'x': 'a', 
+            'y': 'b',
+            'label': key, 
+            'color': colors[key]
+        }
+        
+        group.plot(**params)
+
+    pyplot.show()
+```
+
+```
+plot_dataset(var['dataset'])
+```
+
+```
+from sklearn.model_selection import train_test_split
+
+def split_data(dataset, 
+               test_size=0.2, 
+               random_state=0):
+
+    AB, C = train_test_split(
+        dataset, 
+        test_size=test_size, 
+        random_state=random_state
+    )
+
+    A, B = train_test_split(
+        AB, 
+        test_size=0.25, 
+        random_state=random_state
+    )
+    
+    return A, B, C
+```
+
+```
+training, validation, test = split_data(
+    var['dataset']
+)
+
+var['training'] = training
+var['validation'] = validation
+var['test'] = test
+```
+
+```
+var['training']
+```
+
+```
+!mkdir -p data
+```
+
+```
+var['training'].to_csv("./data/train.csv", 
+                       index=False, 
+                       header=False)
+```
+
+```
+var['validation'].to_csv("./data/validation.csv",
+                         index=False, 
+                         header=False)
+```
+
+```
+var['test'].to_csv("./data/test.csv", 
+                   index=False, 
+                   header=False)
+```
+
+```
+test_data = var['test'].drop("target", axis=1)
+test_data
+```
+
+```
+test_data.to_csv("./data/test_no_target.csv", 
+                 index=False, 
+                 header=False)
+```
+
+```
+import random
+import string
+
+def generate_string(length=6):
+    return ''.join(
+        random.choices(string.ascii_lowercase,     
+                       k=length))
+```
+
+```
+prefix = generate_string()
+print(prefix)
+```
+
+```
+session = Session()
+role = get_execution_role()
+bucket = session.default_bucket()
+```
+
+```
+TRAIN_DATA = "train.csv"
+VALIDATION_DATA = "validation.csv"
+TEST_DATA = "test.csv"
+DATA_DIRECTORY = "data"
+```
+
+```
+train_input = session.upload_data(
+    DATA_DIRECTORY, 
+    bucket=bucket, 
+    key_prefix="{}/{}".format(prefix, DATA_DIRECTORY)
+)
+```
+
+```
+!aws s3 ls {train_input} --recursive
+```
+
+```
+s3_train_input_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    prefix, 
+    TRAIN_DATA
+)
+
+s3_val_input_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    prefix, 
+    VALIDATION_DATA
+)
+
+s3_output_path = "s3://{}/{}/output".format(
+    bucket, 
+    prefix
+)
+
+s3_test_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    prefix, 
+    TEST_DATA
+)
+```
+
 ## Training an XGBoost binary classifier
 ## Deploying an XGBoost model to a real-time inference endpoint
 ## Setting up BERT fine-tuning with SageMaker JumpStart
