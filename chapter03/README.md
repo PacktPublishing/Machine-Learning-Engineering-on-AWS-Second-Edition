@@ -694,5 +694,78 @@ trainer.hyperparameters
 ```
 
 ## Using a smaller dataset for fine-tuning
+
+```
+trainer.input_data_config
+```
+
+```
+trainer.input_data_config[0].data_source.s3_uri
+```
+
+```
+!mkdir -p data
+```
+
+```
+data_config = trainer.input_data_config[0]
+input_dataset = data_config.data_source.s3_uri
+```
+
+```
+!aws s3 ls {input_dataset}
+```
+
+```
+!aws s3 cp {input_dataset}data.csv data
+```
+
+```
+!wc -l data/data.csv
+```
+
+```
+!head data/data.csv
+```
+
+```
+!head -n 10000 data/data.csv > data/data_10k.csv
+```
+
+```
+!wc -l data/data_10k.csv
+```
+
+```
+!mv data/data_10k.csv data/data.csv
+```
+
+```
+DATA_DIRECTORY = "data"
+
+train_input = session.upload_data(
+    DATA_DIRECTORY + "/" + "data.csv", 
+    bucket=bucket, 
+    key_prefix=prefix
+)
+```
+
+```
+train_input
+```
+
+```
+!aws s3 ls {train_input}
+```
+
+```
+conf = trainer.input_data_config[0]
+conf.data_source.s3_uri = train_input
+```
+
+```
+trainer.input_data_config[0]
+```
+
 ## Running the BERT model fine-tuning job
 ## Deploying the fine-tuned model to a real-time inference endpoint
