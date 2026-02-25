@@ -808,3 +808,72 @@ output_path
 ```
 
 ## Deploying the fine-tuned model to a real-time inference endpoint
+
+```
+from sagemaker.serve.model_builder import ModelBuilder
+
+model_builder = ModelBuilder(
+    model=trainer,
+    dependencies={"auto": False}
+)
+```
+
+```
+model_name = "jumpstart-" + generate_string()
+```
+
+```
+core_model = model_builder.build(
+    model_name=model_name
+)
+```
+
+```
+%%time
+endpoint_name = "jumpstart-ep-" + generate_string()
+endpoint = model_builder.deploy(
+    endpoint_name=endpoint_name
+)
+```
+
+```
+test_data = [
+    "Where do the watersheds divide at?", 
+    "The watersheds divide at Triple Divide Peak in Glacier National Park."
+]
+
+body = json.dumps(test_data)
+
+result = endpoint.invoke(
+    body=body,
+    content_type="application/list-text"
+)
+
+prediction = json.loads(
+    result.body.read().decode('utf-8')
+)
+print(prediction)
+```
+
+```
+test_data = [
+    "Where do the watersheds divide at?", 
+    "Montana is one of few geographic areas in the world whose rivers form parts of three major watersheds (i.e. where two continental divides intersect)."
+]
+
+body = json.dumps(test_data)
+
+result = endpoint.invoke(
+    body=body,
+    content_type="application/list-text"
+)
+
+prediction = json.loads(
+    result.body.read().decode('utf-8')
+)
+print(prediction)
+```
+
+```
+endpoint.delete()
+```
