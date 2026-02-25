@@ -1,4 +1,4 @@
-<img width="468" height="23" alt="image" src="https://github.com/user-attachments/assets/9cff55d4-f0f1-45e2-a9ba-d2310190985f" /># Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
+# Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
 
 ## Setting up and preparing your JupyterLab notebook
 
