@@ -1,4 +1,4 @@
-# Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
+<img width="468" height="23" alt="image" src="https://github.com/user-attachments/assets/9cff55d4-f0f1-45e2-a9ba-d2310190985f" /># Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
 
 ## Setting up and preparing your JupyterLab notebook
 
@@ -580,6 +580,119 @@ predictor.delete()
 ```
 
 ## Setting up BERT fine-tuning with SageMaker JumpStart
+
+```
+%pip uninstall -y sagemaker sagemaker-serve
+%pip install "sagemaker==3.2.0"
+%pip install "sagemaker-serve==1.2.0"
+```
+
+```
+import warnings
+
+m = "Field .* has conflict with protected namespace"
+
+warnings.filterwarnings(
+    "ignore",
+    message=m
+)
+```
+
+```
+import json
+import uuid
+
+from sagemaker.train.model_trainer import ModelTrainer
+from sagemaker.core.jumpstart import JumpStartConfig
+from sagemaker.core.helper.session_helper import (
+    Session, 
+    get_execution_role
+)
+```
+
+```
+session = Session()
+role = get_execution_role()
+region = session.boto_region_name
+bucket = session.default_bucket()
+```
+
+```
+import random
+import string
+
+def generate_string(length=6):
+    return ''.join(
+        random.choices(string.ascii_lowercase,     
+                       k=length))
+```
+
+```
+prefix = generate_string()
+print(prefix)
+```
+
+```
+model_id = "huggingface-spc-bert-base-cased"
+
+jumpstart_config = JumpStartConfig(
+    model_id=model_id,
+    accept_eula=False
+)
+```
+
+```
+hyperparameters = {
+    "epochs": 2,
+    "learning_rate": 6e-5,
+    "train_batch_size": 32
+}
+```
+
+```
+trainer = ModelTrainer.from_jumpstart_config(
+    jumpstart_config=jumpstart_config,
+    hyperparameters=hyperparameters,
+    sagemaker_session=session
+)
+```
+
+```
+trainer.source_code.source_dir
+```
+
+```
+source_dir = trainer.source_code.source_dir
+```
+
+```
+!aws s3 cp {source_dir} sourcedir.tar.gz
+```
+
+```
+!mkdir -p sourcedir
+```
+
+```
+!tar -xzf sourcedir.tar.gz -C sourcedir
+```
+
+```
+!ls -R sourcedir
+```
+
+```
+trainer.compute.instance_type
+```
+
+```
+trainer.networking.enable_network_isolation
+```
+
+```
+trainer.hyperparameters
+```
+
 ## Using a smaller dataset for fine-tuning
 ## Running the BERT model fine-tuning job
 ## Deploying the fine-tuned model to a real-time inference endpoint
