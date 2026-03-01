@@ -174,3 +174,22 @@ aws s3 mb s3://$UPLOAD_BUCKET
 ```
 aws s3 cp tmp/sentiments_data.csv s3://$UPLOAD_BUCKET/
 ```
+
+## Running SQL queries in Amazon Athena
+
+### Using the AWS CLI to run SQL queries with Amazon Athena
+### Using Boto3 to run SQL queries with Amazon Athena
+
+## Ingesting data into a SageMaker Feature Store
+
+### Preparing the data to be ingested into the Feature Store
+### Ingesting data into a Feature Store
+
+## Adding searchable metadata to the features
+
+### Updating the feature metadata
+### Searching features in an existing feature group using the metadata
+
+## Retrieving data from the online and offline feature stores
+### Retrieving data from the online feature store
+### Retrieving data from the offline feature store
