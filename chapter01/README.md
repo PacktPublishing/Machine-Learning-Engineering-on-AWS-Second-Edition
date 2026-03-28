@@ -1,4 +1,4 @@
-# A Gentle Introduction to Generative AI and AI Agents on AWS
+# Chapter 1: A Gentle Introduction to Generative AI and AI Agents on AWS
 
 ## Exploring foundation models in Amazon Bedrock
 
