@@ -144,27 +144,113 @@ print(image)
 ## Deploying your Model to a Real-Time Inference Endpoint
 
 ```
+from sagemaker.serve.builder.schema_builder import (
+    SchemaBuilder
+)
+from sagemaker.serve.spec.inference_spec import (
+    InferenceSpec
+)
+from sagemaker.serve import ModelBuilder
 ```
 
 ```
+import numpy as np
+import pandas as pd
+import xgboost
+from xgboost import XGBClassifier
+
+
+class XGBoostModelSpec(InferenceSpec):
+    def load(self, model_dir: str):
+        m = XGBClassifier()
+        m.load_model(model_dir + "/xgboost-model")
+        return m
+
+    def invoke(self, 
+               input_object: object, 
+               model: object):
+        pred_proba = model.predict_proba(input_object)
+        pred = np.argmax(pred_proba, axis=1)
+        return pred
 ```
 
 ```
+inference_spec = XGBoostModelSpec()
 ```
 
 ```
+import numpy as np
+
+sample_input = np.array([ 1.9127373 , -0.42719723])
+sample_output = np.array([1.0])
+
+schema_builder = SchemaBuilder(
+    sample_input=sample_input,
+    sample_output=sample_output
+)
 ```
 
 ```
+model_builder = ModelBuilder(
+    model_path=s3_model,
+    role_arn=role,
+    image_uri=image,
+    inference_spec=inference_spec,
+    schema_builder=schema_builder
+)
 ```
 
 ```
+model_builder.build()
 ```
 
 ```
+endpoint_name = f"xgb-ep-{unique}"
 ```
 
 ```
+predictor = model_builder.deploy(
+    endpoint_name=endpoint_name
+)
+```
+
+```
+from sagemaker.core.deserializers import (
+    JSONDeserializer
+)
+
+from sagemaker.core.serializers import (
+    CSVSerializer,
+)
+
+predictor.serializer = CSVSerializer()
+predictor.deserializer = JSONDeserializer()
+```
+
+```
+import json
+
+def invoke_endpoint(a, b, predictor=predictor):
+    payload = f"{a},{b}"
+
+    result = predictor.invoke(
+        body=payload,
+        content_type="text/csv"
+    )
+
+    return int(result.body)
+```
+
+```
+invoke_endpoint(-1.0, 1.5)
+```
+
+```
+invoke_endpoint(1.0, -1.0)
+```
+
+```
+predictor.delete()
 ```
 
 ## Deploying your Model to a Serverless Inference Endpoint
