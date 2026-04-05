@@ -460,28 +460,348 @@ async_predictor.delete()
 
 ## Setting up a Shadow Test with a SageMaker Inference Endpoint
 
+### Creating a shadow test
+
 ```
+%pip uninstall -y sagemaker sagemaker-serve
+%pip install "sagemaker==3.5.0"
+%pip install "sagemaker-serve==1.2.0"
 ```
 
 ```
+from sagemaker.core.image_uris import (
+    retrieve as retrieve_image
+)
+
+region = 'us-east-1'
+image01_params = {
+    "framework": 'huggingface', 
+    "region": region, 
+    "version": '4.12.3', 
+    "image_scope": 'inference', 
+    "base_framework_version": 'pytorch1.9.1', 
+    "py_version": 'py38', 
+    "container_version": 'ubuntu20.04', 
+    "instance_type": 'ml.m5.xlarge'
+}
+
+image_01_uri = retrieve_image(**image01_params)
+image_01_uri
 ```
 
 ```
+image02_params = {
+    "framework": 'huggingface', 
+    "region": region, 
+    "version": '4.17.0', 
+    "image_scope": 'inference', 
+    "base_framework_version": 'pytorch1.10.2', 
+    "py_version": 'py38', 
+    "container_version": 'ubuntu20.04', 
+    "instance_type": 'ml.m5.xlarge'
+}
+
+image_02_uri = retrieve_image(**image02_params)
+image_02_uri
 ```
 
 ```
+model_01_id = 'distilbert-base-uncased-distilled-squad'
+
+first_model = {
+    'Image': image_01_uri,
+    'ContainerHostname': 'firstModel',
+    'Environment': {
+        'HF_MODEL_ID': model_01_id,
+        'HF_TASK':'question-answering'
+    }
+}
 ```
 
 ```
+model_02_id = 'deepset/roberta-base-squad2'
+
+second_model = {
+    'Image': image_02_uri,
+    'ContainerHostname': 'secondModel',
+    'Environment': {
+        'HF_MODEL_ID': model_02_id,
+        'HF_TASK': 'question-answering'
+    }
+}
 ```
 
 ```
+import boto3
+
+from sagemaker.core.helper.session_helper import (
+    get_execution_role
+)
+
+execution_role = get_execution_role()
+sagemaker_client = boto3.client('sagemaker')
 ```
 
 ```
+model_name = "shadow-testing-001"
+
+model_config = {
+    "ModelName": model_name,
+    "ExecutionRoleArn": execution_role,
+    "Containers": [first_model]
+}
+
+sagemaker_client.create_model(**model_config)
 ```
 
 ```
+model_name = "shadow-testing-002"
+
+model_config = {
+    "ModelName": model_name,
+    "ExecutionRoleArn": execution_role,
+    "Containers": [second_model]
+}
+
+sagemaker_client.create_model(**model_config)
+```
+
+```
+import random
+import string
+
+def generate_string(length=6):
+    return ''.join(
+        random.choices(string.ascii_lowercase,     
+                       k=length))
+```
+
+```
+unique = generate_string(length=12)
+print(unique)
+```
+
+```
+unique_s3_bucket_name = f"data-capture-{unique}"
+```
+
+```
+!aws s3 mb s3://{ unique_s3_bucket_name }
+```
+
+```
+s3_capture_path = f"s3://{unique_s3_bucket_name}/"
+
+data_capture_config = {
+    "EnableCapture": True,
+    "InitialSamplingPercentage": 100,  
+    "DestinationS3Uri": s3_capture_path,
+    "CaptureOptions": [
+        {"CaptureMode": "Input"},  
+        {"CaptureMode": "Output"}  
+    ],
+    "CaptureContentTypeHeader": {
+        "CsvContentTypes": ["text/csv"],
+        "JsonContentTypes": ["application/json"]
+    }
+}
+```
+
+```
+config_name = "shadow-testing-endpoint-config-001"
+
+production_variants = [
+    {
+        "VariantName": "shadow-testing-variant-001",
+        "ModelName": "shadow-testing-001",
+        "InstanceType": "ml.m5.xlarge",
+        "InitialInstanceCount": 1,
+        "InitialVariantWeight": 1,
+    }
+]
+
+shadow_variants = [
+    {
+        "VariantName": "shadow-testing-variant-002",
+        "ModelName": "shadow-testing-002",
+        "InstanceType": "ml.m5.xlarge",
+        "InitialInstanceCount": 1,
+        "InitialVariantWeight": 1,
+    }
+]
+```
+
+```
+sagemaker_client.create_endpoint_config(
+    EndpointConfigName=config_name,
+    ProductionVariants=production_variants,
+    ShadowProductionVariants=shadow_variants,
+    DataCaptureConfig=data_capture_config
+)
+```
+
+```
+sagemaker_client.create_endpoint(
+    EndpointName="shadow-testing-endpoint-001",
+    EndpointConfigName=config_name,
+)
+```
+
+```
+from time import sleep
+
+def wait_for_endpoint(endpoint_name):
+    while True:
+        response = sagemaker_client.describe_endpoint(
+            EndpointName=endpoint_name
+        )
+        status = response['EndpointStatus']
+        print(f"ENDPOINT STATUS: {status}")
+
+        if status == 'InService':
+            break
+        elif status == 'Failed':
+            error = "ENDPOINT CREATION FAILED"
+            raise RuntimeError(error)
+
+        sleep(15)
+```
+
+```
+%%time
+wait_for_endpoint("shadow-testing-endpoint-001")
+```
+
+```
+sagemaker_client.describe_endpoint(
+    EndpointName="shadow-testing-endpoint-001"
+)
+```
+
+```
+from json import loads as json_loads
+from json import dumps as json_dumps
+
+runtime_client = boto3.client('sagemaker-runtime')
+
+def invoke_endpoint(input_payload, endpoint_name):
+    response = runtime_client.invoke_endpoint(
+        EndpointName=endpoint_name,
+        ContentType="application/json",
+        Accept="application/json",
+        Body=json_dumps(input_payload),
+    )
+    
+    response_body = response['Body']
+    
+    output = json_loads(response_body.read().decode())
+    return output
+```
+
+```
+input_payload_01 = {"inputs": {
+    "context": "Python is a widely-used programming language known for its readability and ease of use. It supports multiple programming paradigms, including procedural, object-oriented, and functional programming. Python is popular in data science, web development, automation, and more.",
+    "question": "What are the uses of Python?",
+}}
+
+invoke_endpoint(
+    input_payload=input_payload_01,
+    endpoint_name="shadow-testing-endpoint-001"
+)
+```
+
+```
+input_payload_02 = {"inputs": {
+    "context": "The Moon is Earth's only natural satellite and the fifth-largest satellite in the Solar System. It is about one-quarter the diameter of Earth, making it the largest natural satellite relative to the size of its planet.",
+    "question": "How large is the Moon?",
+}}
+
+invoke_endpoint(
+    input_payload=input_payload_02,
+    endpoint_name="shadow-testing-endpoint-001"
+)
+```
+
+### Inspecting the captured data
+
+```
+!aws s3 ls { s3_capture_path } --recursive
+```
+
+```
+!aws s3 cp { s3_capture_path } . --recursive
+```
+
+### Promoting a shadow variant
+
+```
+endpoint_config_name = "shadow-testing-endpoint-config-002"
+
+single_variant = {
+    "VariantName": "shadow-testing-variant-002",
+    "ModelName": "shadow-testing-002",
+    "InstanceType": "ml.m5.xlarge",
+    "InitialInstanceCount": 1,
+    "InitialVariantWeight": 1,
+}
+
+sagemaker_client.create_endpoint_config(
+    EndpointConfigName=endpoint_config_name,
+    ProductionVariants=[
+        single_variant
+    ],
+   DataCaptureConfig=data_capture_config
+)
+```
+
+```
+sagemaker_client.update_endpoint(
+    EndpointName="shadow-testing-endpoint-001",
+    EndpointConfigName=endpoint_config_name,
+)
+```
+
+```
+%%time
+wait_for_endpoint("shadow-testing-endpoint-001")
+```
+
+```
+sagemaker_client.describe_endpoint(
+    EndpointName="shadow-testing-endpoint-001"
+)
+```
+
+### Cleaning up
+
+```
+sagemaker_client.delete_endpoint(
+    EndpointName="shadow-testing-endpoint-001"
+)
+```
+
+```
+endpoint_configurations = [
+    "shadow-testing-endpoint-config-001",
+    "shadow-testing-endpoint-config-002"
+]
+
+for config in endpoint_configurations:
+    sagemaker_client.delete_endpoint_config(
+        EndpointConfigName=config
+    )
+```
+
+```
+models = [
+    "shadow-testing-001",
+    "shadow-testing-002"
+]
+
+for model in models:
+    sagemaker_client.delete_model(
+        ModelName=model
+    )
 ```
 
 ## Using Canary Traffic Shifting when performing Blue/Green Deployments
