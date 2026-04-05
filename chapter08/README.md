@@ -806,26 +806,217 @@ for model in models:
 
 ## Using Canary Traffic Shifting when performing Blue/Green Deployments
 
+### Configuring a Canary Deployment in SageMaker AI
+
 ```
+print(first_model)
 ```
 
 ```
+model_config = {
+    "ModelName": "traffic-shifting-001",
+    "ExecutionRoleArn": execution_role,
+    "Containers": [first_model]
+}
+sagemaker_client.create_model(**model_config)
 ```
 
 ```
+config_name = "traffic-shifting-endpoint-config-001"
+only_variant = {
+    "VariantName": "traffic-shifting-only-variant",
+    "ModelName": "traffic-shifting-001",
+    "InstanceType": "ml.m5.xlarge",
+    "InitialInstanceCount": 2,
+    "InitialVariantWeight": 1,
+}
+
+sagemaker_client.create_endpoint_config(
+    EndpointConfigName=config_name,
+    ProductionVariants=[only_variant],
+    DataCaptureConfig=data_capture_config
+)
 ```
 
 ```
+deployment_config = {
+    "BlueGreenUpdatePolicy": {
+        "TrafficRoutingConfiguration": {
+            "Type": "CANARY",
+            "CanarySize": {
+                "Type": "CAPACITY_PERCENT",
+                "Value": 40
+            },
+            "WaitIntervalInSeconds": 1200
+        },
+        "TerminationWaitInSeconds": 1200,
+        "MaximumExecutionTimeoutInSeconds": 3600
+    },
+}
 ```
 
 ```
+sagemaker_client.create_endpoint(
+    EndpointName="traffic-shifting-endpoint-001",
+    EndpointConfigName=config_name,
+    DeploymentConfig=deployment_config
+)
 ```
 
 ```
+%%time
+wait_for_endpoint("traffic-shifting-endpoint-001")
 ```
 
 ```
+sagemaker_client.describe_endpoint(
+    EndpointName="traffic-shifting-endpoint-001"
+)
 ```
 
 ```
+print(input_payload_01)
+```
+
+```
+invoke_endpoint(
+    input_payload=input_payload_01,
+    endpoint_name="traffic-shifting-endpoint-001"
+)
+```
+
+```
+print(input_payload_02)
+```
+
+```
+invoke_endpoint(
+    input_payload=input_payload_02,
+    endpoint_name="traffic-shifting-endpoint-001"
+)
+```
+
+```
+print(second_model)
+```
+
+```
+model_config = {
+    "ModelName": "traffic-shifting-002",
+    "ExecutionRoleArn": execution_role,
+    "Containers": [second_model]
+}
+sagemaker_client.create_model(**model_config)
+```
+
+```
+config_name = "traffic-shifting-endpoint-config-002"
+
+new_variant = {
+    "VariantName": "traffic-shifting-only-variant",
+    "ModelName": "traffic-shifting-002",
+    "InstanceType": "ml.m5.xlarge",
+    "InitialInstanceCount": 2,
+    "InitialVariantWeight": 1,
+}
+
+sagemaker_client.create_endpoint_config(
+    EndpointConfigName=config_name,
+    ProductionVariants=[new_variant],
+    DataCaptureConfig=data_capture_config
+)
+```
+
+```
+sagemaker_client.update_endpoint(
+    EndpointName="traffic-shifting-endpoint-001",
+    EndpointConfigName=config_name,
+    RetainDeploymentConfig=True
+)
+```
+
+```
+from pprint import pprint
+
+def wait_and_describe_endpoint(endpoint_name):
+    while True:
+        response = sagemaker_client.describe_endpoint(
+            EndpointName=endpoint_name
+        )
+        
+        status = response['EndpointStatus']
+        
+        print("-"*100)
+        print(f"ENDPOINT STATUS: {status}")
+        print("-"*100)
+        pprint(response, indent=2)
+        print("-"*100)
+
+        if status == 'InService':
+            break
+        elif status == 'Failed':
+            error = "ENDPOINT CREATION FAILED"
+            raise RuntimeError(error)
+
+        sleep(120)
+```
+
+```
+%%time
+endpoint_name = "traffic-shifting-endpoint-001"
+wait_and_describe_endpoint(endpoint_name)
+```
+
+```
+print(input_payload_01)
+```
+
+```
+invoke_endpoint(
+    input_payload=input_payload_01,
+    endpoint_name="traffic-shifting-endpoint-001"
+)
+```
+
+```
+print(input_payload_02)
+```
+
+```
+invoke_endpoint(
+    input_payload=input_payload_02,
+    endpoint_name="traffic-shifting-endpoint-001"
+)
+```
+
+### Cleaning up
+
+```
+sagemaker_client.delete_endpoint(
+    EndpointName="traffic-shifting-endpoint-001"
+)
+```
+
+```
+endpoint_configurations = [
+    "traffic-shifting-endpoint-config-001",
+    "traffic-shifting-endpoint-config-002",
+]
+
+for config in endpoint_configurations:
+    sagemaker_client.delete_endpoint_config(
+        EndpointConfigName=config
+    )
+```
+
+```
+models = [
+    "traffic-shifting-001",
+    "traffic-shifting-002"
+]
+
+for model in models:
+    sagemaker_client.delete_model(
+        ModelName=model
+    )
 ```
