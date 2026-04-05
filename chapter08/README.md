@@ -256,79 +256,206 @@ predictor.delete()
 ## Deploying your Model to a Serverless Inference Endpoint
 
 ```
+endpoint_name = f"xgb-serverless-ep-{unique}"
 ```
 
 ```
+from sagemaker.core.inference_config import (
+    ServerlessInferenceConfig
+)
+
+inference_config = ServerlessInferenceConfig(
+    memory_size_in_mb=2048
+)
+
+serverless_predictor = model_builder.deploy(
+    endpoint_name=endpoint_name,
+    inference_config=inference_config,
+)
 ```
 
 ```
+serverless_predictor.serializer = CSVSerializer()
+serverless_predictor.deserializer = JSONDeserializer()
 ```
 
 ```
+invoke_endpoint(
+    -1.0, 1.5, 
+    predictor=serverless_predictor
+)
 ```
 
 ```
+invoke_endpoint(
+    1.0, -1.0, 
+    predictor=serverless_predictor
+)
 ```
 
 ```
-```
-
-```
-```
-
-```
+serverless_predictor.delete()
 ```
 
 ## Running Batch Inference with Batch Transform
 
 ```
+download_file("batch_input.csv")
 ```
 
 ```
+INPUT_DIRECTORY = "input"
+
+batch_input = session.upload_data(
+    "batch_input.csv", 
+    bucket=bucket, 
+    key_prefix="{}/{}".format(unique, INPUT_DIRECTORY)
+)
 ```
 
 ```
+model_name = f"xgb-transform-model-{unique}"
+model_builder.build(model_name=model_name)
 ```
 
 ```
+output_path = f"s3://{bucket}/transform-output/"
+
+from sagemaker.core.transformer import Transformer
+
+transformer = Transformer(
+    model_name=model_name,
+    instance_count=1,
+    instance_type="ml.m5.xlarge",
+    accept="text/csv",
+    assemble_with="Line",
+    output_path=output_path,
+    sagemaker_session=session,
+)
 ```
 
 ```
+transformer.transform(
+    batch_input,
+    content_type="text/csv",
+    split_type="Line",
+    input_filter="$[1:]",
+)
 ```
 
 ```
+!aws s3 ls {output_path}
 ```
 
 ```
+output_file_path = output_path + "batch_input.csv.out"
+!aws s3 cp {output_file_path} batch_output.csv
 ```
 
 ```
+!cat batch_output.csv
 ```
 
 ## Deploying your Model to an Asynchronous Inference Endpoint
 
 ```
+endpoint_name = f"xgb-async-ep-{unique}"
+output_path = f"s3://{bucket}/async-output/"
 ```
 
 ```
+from sagemaker.serve.async_inference import (
+    async_inference_config
+)
+
+config = async_inference_config.AsyncInferenceConfig(
+    output_path=output_path
+)
+
+model_builder = ModelBuilder(
+    model_path=s3_model,
+    role_arn=role,
+    image_uri=image,
+    inference_spec=inference_spec,
+    schema_builder=schema_builder
+)
+
+model_builder.build()
 ```
 
 ```
+async_predictor = model_builder.deploy(
+    endpoint_name=endpoint_name,
+    inference_config=config
+)
 ```
 
 ```
+download_file("async_input.csv")
 ```
 
 ```
+INPUT_DIRECTORY = "input"
+
+async_input = session.upload_data(
+    "async_input.csv", 
+    bucket=bucket, 
+    key_prefix="{}/{}".format(unique, INPUT_DIRECTORY)
+)
 ```
 
 ```
+import json
+
+result = async_predictor.invoke_async(
+    input_location=async_input,
+    content_type="text/csv"
+)
 ```
 
 ```
+import boto3
+
+client = boto3.client("logs")
+
+ep_name = endpoint_name
+log_group = f"/aws/sagemaker/Endpoints/{ep_name}"
+
+response = client.describe_log_streams(
+    logGroupName=log_group,
+    orderBy="LastEventTime",
+    descending=True,
+    limit=1
+)
+
+latest_stream = response["logStreams"][0]
+
+events = client.get_log_events(
+    logGroupName=log_group,
+    logStreamName=latest_stream["logStreamName"],
+    limit=50,
+    startFromHead=False
+)
+
+for e in events["events"]:
+    print(e["message"])
 ```
 
 ```
+output_location = result.output_location
+output_location
+```
+
+```
+!aws s3 cp {output_location} async_output.csv
+```
+
+```
+!cat async_output.csv
+```
+
+```
+async_predictor.delete()
 ```
 
 ## Setting up a Shadow Test with a SageMaker Inference Endpoint
