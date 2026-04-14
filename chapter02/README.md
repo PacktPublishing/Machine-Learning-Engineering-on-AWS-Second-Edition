@@ -524,7 +524,6 @@ result = agent(prompt)
 import boto3
 from strands import Agent, tool
 from strands_tools import (
-    calculator, 
     current_time, 
     shell
 )
