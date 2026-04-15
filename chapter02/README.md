@@ -1,3 +1,7 @@
+# Building AI Agents with SageMaker AI and Bedrock AgentCore
+
+## Deploying a Pretrained LLM with SageMaker AI
+
 ```
 %pip install 'strands-agents[sagemaker]'
 ```
@@ -146,6 +150,8 @@ resp = predictor.invoke(
 print(resp.body.read())
 ```
 
+## Building AI Agents with Amazon SageMaker AI and Strands Agents
+
 ```
 %pip install strands-agents==1.22.0
 %pip install strands-agents-builder==0.1.10
@@ -225,6 +231,10 @@ prompt = """I was born on June 1, 1998, and I am 10 years older than my brother.
 response = agent(prompt)
 ```
 
+## Building AI Agents with Amazon Bedrock AgentCore
+
+### Getting Started with Amazon Bedrock AgentCore
+
 ```
 which uv
 ```
@@ -260,6 +270,8 @@ agentcore dev
 ```
 agentcore invoke --dev "Hello Agent!"
 ```
+
+### Customizing your agent to interact with a SageMaker AI endpoint
 
 ```
 ...
@@ -362,6 +374,10 @@ agentcore dev
 agentcore invoke --dev "I was born on June 1, 1998, and I am 10 years older than my brother. How old is my brother?"
 ```
 
+## Deploying Production-Ready Agents with Bedrock AgentCore Runtime
+
+### Deploying an Agent with Bedrock AgentCore Runtime
+
 ```
 sudo apt install -y zip
 ```
@@ -378,9 +394,13 @@ agentcore invoke "I was born on June 1, 1998, and I am 10 years older than my br
 agentcore invoke "I was born on June 1, 1998, and I am 10 years older than my brother. How old is my brother?"
 ```
 
+### Cleaning up
+
 ```
 agentcore destroy
 ```
+
+## Setting up an Amazon Bedrock Knowledge Base
 
 ```
 Xironal Flux Displacement
@@ -389,6 +409,8 @@ Xironal Flux Displacement
 ```
 When was the Xironal Flux Displacement phenomenon discovered?
 ```
+
+## Building a RAG-powered AI agent with Strands Agents
 
 ```
 %pip install strands-agents==1.22.0
@@ -519,6 +541,10 @@ agent = Agent(
 prompt = """Get the current month and then tell me more about the Xironal Flux Displacement and Subatomic Event Polarization stored in the knowledge base which happened during the same quarter the last few years"""
 result = agent(prompt)
 ```
+
+## Building a RAG-powered AI agent that interacts with a SageMaker AI inference endpoint
+
+### Building the RAG-powered agent
 
 ```
 import boto3
