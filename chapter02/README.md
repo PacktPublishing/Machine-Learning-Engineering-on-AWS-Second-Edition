@@ -279,7 +279,7 @@ uv sync
 ```
 import os
 from strands import Agent
-from strands_tools import calculator, current_time
+from strands_tools import calculator
 from strands.models.sagemaker import SageMakerAIModel
 
 from bedrock_agentcore.runtime import (
