@@ -546,39 +546,487 @@ sm.delete_endpoint(
 ## Performing Hyperparameter Tuning with Amazon SageMaker AI
 
 ```
+%pip uninstall -y sagemaker sagemaker-serve
+%pip install "sagemaker==3.5.0"
+%pip install "sagemaker-serve==1.2.0"
+%pip install conda-pack
 ```
 
 ```
+import random
+import string
+
+def generate_string(length=6):
+    return ''.join(
+        random.choices(string.ascii_lowercase,     
+                       k=length))
 ```
 
 ```
+unique = generate_string()
+print(unique)
 ```
 
 ```
+TRAIN_DATA = "train.csv"
+VALIDATION_DATA = "validation.csv"
+TEST_DATA = "test.csv"
+DATA_DIRECTORY = "data"
 ```
 
 ```
+import urllib.request
+from pathlib import Path
+from typing import Union
+
+BASE_URL_PARTS = [
+    "https://raw.githubusercontent.com/",
+    "PacktPublishing/",
+    "Machine-Learning-Engineering-on-",
+    "AWS-Second-Edition/",
+    "refs/heads/main/",
+    "chapter07/",
+]
+
+def download_file(
+        filename: str, 
+        directory: Union[str, Path] = DATA_DIRECTORY
+    ) -> Path:
+    url = "".join(BASE_URL_PARTS) + filename
+    
+    directory_path = Path(directory)
+    directory_path.mkdir(parents=True, exist_ok=True)
+    
+    output_file = directory_path / filename
+    urllib.request.urlretrieve(url, output_file)
+    
+    return output_file
 ```
 
 ```
+download_file(TRAIN_DATA)
+download_file(VALIDATION_DATA)
+download_file(TEST_DATA)
+```
+
+```
+from sagemaker.core.helper.session_helper import (
+    Session, 
+    get_execution_role
+)
+
+session = Session()
+role = get_execution_role()
+bucket = session.default_bucket()
+```
+
+```
+train_input = session.upload_data(
+    DATA_DIRECTORY, 
+    bucket=bucket, 
+    key_prefix="{}/{}".format(unique, DATA_DIRECTORY)
+)
+```
+
+```
+!aws s3 ls {train_input} --recursive
+```
+
+```
+s3_train_input_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    unique, 
+    TRAIN_DATA
+)
+
+s3_val_input_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    unique, 
+    VALIDATION_DATA
+)
+
+s3_output_path = "s3://{}/{}/output".format(
+    bucket, 
+    unique
+)
+
+s3_test_path = "s3://{}/{}/data/{}".format(
+    bucket, 
+    unique, 
+    TEST_DATA
+)
+```
+
+```
+import os
+import shutil
+import sagemaker
+
+def copy_model_server_file():
+    sagemaker_path = os.path.dirname(
+        sagemaker.__file__)
+
+    source_path = os.path.join(
+        sagemaker_path, 'serve', 
+        'model_server', 'triton', 'model.py')
+
+    destination_path = os.path.join(
+        sagemaker_path, 'serve', 'model.py')
+
+    if os.path.exists(source_path):
+        shutil.copy(source_path, destination_path)
+        print(f"Successfully copied "
+              f"model.py from {source_path} "
+              f"to {destination_path}")
+    else:
+        print(f"Source file not found "
+              f"at {source_path}")
+```
+
+```
+copy_model_server_file()
+```
+
+```
+from sagemaker.core.shapes import (
+    Channel,
+    DataSource,
+    S3DataSource,
+    OutputDataConfig,
+    StoppingCondition,
+)
+
+from sagemaker.core import image_uris
+```
+
+```
+import boto3
+
+region = boto3.Session().region_name
+print(region)
+```
+
+```
+image = image_uris.retrieve(
+    framework="xgboost", 
+    region=region, 
+    image_scope="training",
+    version="1.7-1"
+)
+
+print(image)
+```
+
+```
+hyperparameters = {
+    "objective": "binary:logistic",
+    "num_round": "50"
+}
+```
+
+```
+from sagemaker.core.parameter import IntegerParameter
+
+hyperparameter_ranges = {
+    "max_depth": IntegerParameter(4, 10),
+}
+```
+
+```
+base_job_name = "xgb-hpo-" + unique
+```
+
+```
+from sagemaker.train import ModelTrainer
+from sagemaker.train.configs import Compute
+
+compute = Compute(
+    enable_managed_spot_training=True
+)
+
+model_trainer = ModelTrainer(
+    base_job_name=base_job_name,
+    hyperparameters=hyperparameters,
+    training_image=image,
+    training_input_mode="File",
+    role=role,
+    compute=compute,
+    output_data_config=OutputDataConfig(
+        s3_output_path=s3_output_path
+    ),
+    stopping_condition=StoppingCondition(
+        max_runtime_in_seconds=1800,
+        max_wait_time_in_seconds=1800
+    ),
+)
+```
+
+```
+from sagemaker.train.tuner import HyperparameterTuner
+
+metric_definitions = [
+    {
+        "Name": "validation-logloss",
+        "Regex": "validation-logloss:([0-9\\.]+)"
+    },
+    {
+        "Name": "train-logloss",
+        "Regex": "train-logloss:([0-9\\.]+)"
+    }
+]
+
+tuner = HyperparameterTuner(
+    model_trainer=model_trainer,
+    objective_metric_name="validation:f1",
+    hyperparameter_ranges=hyperparameter_ranges,
+    metric_definitions=metric_definitions,
+    max_jobs=6,
+    max_parallel_jobs=3,
+)
+```
+
+```
+train_data_source=DataSource(
+    s3_data_source=S3DataSource(
+        s3_data_type="S3Prefix",
+        s3_uri=s3_train_input_path,               
+        s3_data_distribution_type="FullyReplicated",
+    )
+)
+
+val_data_source=DataSource(
+    s3_data_source=S3DataSource(
+        s3_data_type="S3Prefix",
+        s3_uri=s3_val_input_path,            
+        s3_data_distribution_type="FullyReplicated",
+    )
+)
+```
+
+```
+%%time
+
+tuner.tune(
+    inputs=[
+        Channel(
+            channel_name="train",
+            content_type="csv",
+            compression_type="None",
+            record_wrapper_type="None",
+            data_source=train_data_source,
+        ),
+        Channel(
+            channel_name="validation",
+            content_type="csv",
+            compression_type="None",
+            record_wrapper_type="None",
+            data_source=val_data_source,
+        )
+    ],
+    wait=True
+)
+```
+
+```
+tuner.describe()
+```
+
+```
+analytics = tuner.analytics()
+df = analytics.dataframe()
+```
+
+```
+df
+```
+
+```
+df.sort_values(
+    by="FinalObjectiveValue", 
+    ascending=False
+)
+```
+
+```
+best_training_job = tuner.best_training_job()
+best_training_job
+```
+
+```
+%store best_training_job
+%store unique
+%store role
 ```
 
 ## Deploying the Best-Performing Model from Hyperparameter Tuning
 
 ```
+%store -r best_training_job
+%store -r unique
+%store -r role
 ```
 
 ```
+from sagemaker.core.resources import TrainingJob
+
+job = TrainingJob.get(best_training_job)
+job
 ```
 
 ```
+job.__dict__
 ```
 
 ```
+algo_spec = job.__dict__['algorithm_specification']
+container_image = algo_spec.training_image
+print(container_image)
 ```
 
 ```
+model_artifacts = job.__dict__['model_artifacts']
+s3_model_path = model_artifacts.s3_model_artifacts
+print(s3_model_path)
 ```
 
 ```
+import boto3
+sm = boto3.client("sagemaker")
+model_name = f"model-{unique}"
+
+sm.create_model(
+    ModelName=model_name,
+    PrimaryContainer={
+        "Image": container_image,
+        "ModelDataUrl": s3_model_path,
+        "Environment": {
+            "SHM_SIZE": "1g",
+             "HF_MODEL_ID": "/opt/ml/model",
+            "MAX_INPUT_LENGTH": "2048",
+            "MAX_TOTAL_TOKENS": "4096",
+            "NUM_SHARD": "1"
+        }
+    },
+    ExecutionRoleArn=role
+)
+```
+
+```
+endpoint_config_name = f"endpoint-config-{unique}"
+
+sm.create_endpoint_config(
+    EndpointConfigName=endpoint_config_name,
+    ProductionVariants=[
+        {
+            "VariantName": "AllTraffic",
+            "ModelName": model_name,        
+            "InitialInstanceCount": 1,
+            "InstanceType": "ml.m5.xlarge",
+            "InitialVariantWeight": 1
+        }
+    ]
+)
+```
+
+```
+endpoint_name = f"endpoint-{unique}"
+
+sm.create_endpoint(
+    EndpointName=endpoint_name,
+    EndpointConfigName=endpoint_config_name
+)
+```
+
+```
+from time import sleep
+
+def wait_for_endpoint(endpoint_name, 
+                      sagemaker_client=sm):
+    while True:
+        response = sagemaker_client.describe_endpoint(
+            EndpointName=endpoint_name
+        )
+        status = response['EndpointStatus']
+        print(f"ENDPOINT STATUS: {status}")
+
+        if status == 'InService':
+            break
+        elif status == 'Failed':
+            error = "ENDPOINT CREATION FAILED"
+            raise RuntimeError(error)
+
+        sleep(15)
+```
+
+```
+%%time
+wait_for_endpoint(endpoint_name)
+```
+
+```
+from sagemaker.core.resources import Endpoint
+predictor = Endpoint.get(endpoint_name)
+
+from sagemaker.core.deserializers import (
+    JSONDeserializer
+)
+
+from sagemaker.core.serializers import (
+    CSVSerializer,
+)
+
+predictor.serializer = CSVSerializer()
+predictor.deserializer = JSONDeserializer()
+```
+
+```
+import json
+
+result = predictor.invoke(
+    body=[1.0, -1.0],
+    content_type="text/csv"
+)
+
+result.body
+```
+
+```
+import json
+
+result = predictor.invoke(
+    body=[-1.0, 1.5],
+    content_type="text/csv"
+)
+
+result.body
+```
+
+```
+import json
+
+def invoke_endpoint(a, b, predictor=predictor):
+    payload = f"{a},{b}"
+
+    result = predictor.invoke(
+        body=payload,
+        content_type="text/csv"
+    )
+
+    probability = float(result.body)
+
+    prediction = int(probability > 0.5)
+
+    return prediction
+```
+
+```
+invoke_endpoint(-1.0, 1.5)
+```
+
+```
+invoke_endpoint(1.0, -1.0)
+```
+
+```
+predictor.delete()
 ```
