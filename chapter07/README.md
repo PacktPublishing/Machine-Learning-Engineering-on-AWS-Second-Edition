@@ -340,21 +340,207 @@ role = get_execution_role()
 ## Deploying the Fine-Tuned Model
 
 ```
+%store -r unique
+%store -r role
+%store -r container_image
+%store -r model_files_directory
+%store -r s3_model_path
+%store -r s3_bucket
 ```
 
 ```
+import boto3
+sm = boto3.client("sagemaker")
+model_name = f"model-{unique}"
+
+sm.create_model(
+    ModelName=model_name,
+    PrimaryContainer={
+        "Image": container_image,
+        "ModelDataUrl": s3_model_path,
+        "Environment": {
+            "SHM_SIZE": "1g",
+             "HF_MODEL_ID": "/opt/ml/model",
+            "MAX_INPUT_LENGTH": "2048",
+            "MAX_TOTAL_TOKENS": "4096",
+            "NUM_SHARD": "1"
+        }
+    },
+    ExecutionRoleArn=role
+)
 ```
 
 ```
+endpoint_config_name = f"endpoint-config-{unique}"
+
+sm.create_endpoint_config(
+    EndpointConfigName=endpoint_config_name,
+    ProductionVariants=[
+        {
+            "VariantName": "AllTraffic",
+            "ModelName": model_name,        
+            "InitialInstanceCount": 1,
+            "InstanceType": "ml.g5.4xlarge",
+            "InitialVariantWeight": 1
+        }
+    ]
+)
 ```
 
 ```
+endpoint_name = f"endpoint-{unique}"
+
+sm.create_endpoint(
+    EndpointName=endpoint_name,
+    EndpointConfigName=endpoint_config_name
+)
 ```
 
 ```
+from time import sleep
+
+def wait_for_endpoint(endpoint_name, 
+                      sagemaker_client=sm):
+    while True:
+        response = sagemaker_client.describe_endpoint(
+            EndpointName=endpoint_name
+        )
+        status = response['EndpointStatus']
+        print(f"ENDPOINT STATUS: {status}")
+
+        if status == 'InService':
+            break
+        elif status == 'Failed':
+            error = "ENDPOINT CREATION FAILED"
+            raise RuntimeError(error)
+
+        sleep(15)
 ```
 
 ```
+%%time
+wait_for_endpoint(endpoint_name)
+```
+
+```
+%store endpoint_name
+```
+
+```
+from pprint import pprint
+
+response = sm.describe_model(
+    ModelName=model_name
+)
+
+pprint(response)
+```
+
+```
+response = sm.describe_endpoint_config(
+    EndpointConfigName=endpoint_config_name
+)
+
+pprint(response)
+```
+
+```
+response = sm.describe_endpoint(
+    EndpointName=endpoint_name
+)
+
+pprint(response)
+```
+
+```
+%store -r endpoint_name
+```
+
+```
+import boto3
+import json
+
+client = boto3.client("sagemaker-runtime")
+
+def invoke(prompt, client=client):
+    response = client.invoke_endpoint(
+        EndpointName=endpoint_name,
+        ContentType="application/json",
+        Body=json.dumps({
+            "inputs": prompt,
+            "parameters": {"max_new_tokens": 500}
+        })
+    )
+    
+    print(response["Body"].read().decode())
+```
+
+```
+prompt = """
+### Instruction:
+Improve the given scientific sentence and provide detailed explanations to the related questions.
+
+### Input:
+- Task 1: Improve the following sentence for clarity and scientific tone:
+  "It is notable to mention that various studies have shown that water serves a key role in the synthesis of vital organic compounds."
+
+- Task 2: Explain the process through which water contributes to the synthesis of essential organic compounds.
+
+- Task 3: Discuss how the scarcity or abundance of water in an environment impacts the diversity and functionality of life forms, particularly in terms of metabolic processes and survival strategies.
+
+### Response:
+"""
+
+output = invoke(prompt)
+output
+```
+
+```
+prompt = """
+### Instruction:
+Write a job description.
+
+### Input:
+Role: Part-time Finance Manager  
+Industry: Charity  
+Location: UK  
+Requirements: Previous charity experience is essential  
+
+### Response:
+"""
+
+output = invoke(prompt)
+output
+```
+
+```
+prompt = """
+### Instruction:
+Write a comprehensive blog post and address the related topics in detail.
+
+### Input:
+- Topic: The importance of maintaining physical fitness during remote work
+- Requirements:
+  - Include tips and exercises that can be done at home without any special equipment
+- Additional Questions:
+  1. Discuss the potential benefits and drawbacks of high-intensity interval training (HIIT) for remote workers.
+  2. Elaborate on the recovery process after a HIIT workout for remote workers and how they can manage it without affecting productivity.
+
+### Response:
+"""
+
+output = invoke(prompt)
+output
+```
+
+```
+import boto3
+
+sm = boto3.client("sagemaker")
+
+sm.delete_endpoint(
+    EndpointName=endpoint_name
+)
 ```
 
 ## Performing Hyperparameter Tuning with Amazon SageMaker AI
