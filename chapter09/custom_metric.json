@@ -1,0 +1,20 @@
+{
+    "customMetricDefinition": {
+        "name": "PositiveSentiment",
+        "instructions": "You are a skilled evaluator. Your responsibility is to determine whether the response demonstrates a positive sentiment. Evaluate the response based on its positivity, helpfulness, and constructive nature.\n\nTake the following into account:\n- Does the response maintain a positive and supportive tone?\n- Is the response useful and constructive for the user?\n- Does the response avoid harsh, negative, or critical language?\n\nUse the following rating scale:\n- Good: Response expresses positive sentiment\n- Poor: Response does not express positive sentiment\n\nBelow is the task to evaluate:\nPrompt: {{prompt}}\nResponse: {{prediction}}",
+        "ratingScale": [
+            {
+                "definition": "Good",
+                "value": {
+                    "floatValue": 1
+                }
+            },
+            {
+                "definition": "Poor",
+                "value": {
+                    "floatValue": 0
+                }
+            }
+        ]
+    }
+}
