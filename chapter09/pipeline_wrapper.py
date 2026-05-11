@@ -4,10 +4,18 @@ import boto3
 class PipelineExecution:
     def __init__(self, execution):
         self.execution = execution
-        self.steps_metadata = execution.list_steps()
         self.sm = boto3.client("sagemaker")
         self.logs_client = boto3.client("logs")
 
+        raw_steps = execution.list_steps()
+
+        def sort_key(step):
+            start = step.get("StartTime")
+            return start if start is not None else ""
+
+        self.steps_metadata = sorted(raw_steps, key=sort_key)
+
+    
     def number_of_steps(self):
         return len(self.steps_metadata)
 
