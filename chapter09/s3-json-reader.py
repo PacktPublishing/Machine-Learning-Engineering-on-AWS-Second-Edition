@@ -17,7 +17,7 @@ def load_json_from_s3(s3_path):
 
 
 def lambda_handler(event, context):
-    results_s3_path = event["results_s3_path"]
+    results_s3_path = event["s3_path"]
 
     results = load_json_from_s3(results_s3_path)
 
