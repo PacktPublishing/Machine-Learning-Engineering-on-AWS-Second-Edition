@@ -2,6 +2,105 @@
 
 ## Setting Up the Project Environment and Dependencies
 
+```
+%pip uninstall -y sagemaker sagemaker-serve
+%pip install "sagemaker==3.5.0"
+%pip install "sagemaker-serve==1.2.0"
+%pip install "rich==14.2.0"
+```
+
+```
+CODE_DIRECTORY = "code"
+!mkdir -p {CODE_DIRECTORY}
+```
+
+```
+DATA_DIRECTORY = "data"
+!mkdir -p {DATA_DIRECTORY}
+```
+
+```
+import urllib.request
+from pathlib import Path
+from typing import Union
+
+BASE_URL_PARTS = [
+    "https://raw.githubusercontent.com/",
+    "PacktPublishing/",
+    "Machine-Learning-Engineering-on-",
+    "AWS-Second-Edition/",
+    "refs/heads/main/",
+    "chapter09/",
+]
+
+def download_file(
+        filename: str, 
+        directory: Union[str, Path] = CODE_DIRECTORY
+    ) -> Path:
+    url = "".join(BASE_URL_PARTS) + filename
+    
+    directory_path = Path(directory)
+    directory_path.mkdir(parents=True, exist_ok=True)
+    
+    output_file = directory_path / filename
+    urllib.request.urlretrieve(url, output_file)
+    
+    return output_file
+```
+
+```
+download_file("fine_tuning.py")
+download_file("evaluation.py")
+```
+
+```
+!cat code/fine_tuning.py
+```
+
+```
+!cat code/evaluation.py
+```
+
+```
+download_file(
+    "data.jsonl", 
+    directory=DATA_DIRECTORY
+)
+```
+
+```
+!head data/data.jsonl
+```
+
+```
+download_file(
+    "custom_metric.json", 
+    directory="."
+)
+```
+
+```
+!cat custom_metric.json
+```
+
+```
+download_file(
+    "gen_qa.jsonl", 
+    directory=DATA_DIRECTORY
+)
+```
+
+```
+download_file(
+    "pipeline_wrapper.py", 
+    directory="."
+)
+```
+
+```
+!cat pipeline_wrapper.py
+```
+
 ## Building and Running the Single-Step Fine-Tuning Pipeline
 
 ### Building and Running the Pipeline
@@ -31,8 +130,6 @@
 ### Setting Up the Lambda Function for deploying a model to an existing endpoint
 
 ## Completing the LLMOps pipeline
-
-## Best Practices and Key Considerations for Building Automated ML Workflows
 
 ```
 from sagemaker.mlops.workflow.lambda_step import (
