@@ -1,3 +1,39 @@
+# Automating LLMOps Workflows with SageMaker Pipelines
+
+## Setting Up the Project Environment and Dependencies
+
+## Building and Running the Single-Step Fine-Tuning Pipeline
+
+### Building and Running the Pipeline
+
+### Inspecting Pipeline Execution Logs
+
+## Building and Running the Single-Step Evaluation Pipeline
+
+### Setting Up and Running LLM-as-a-Judge Model Evaluation
+
+### Building and Running the Pipeline
+
+### Inspecting Pipeline Execution Logs
+
+## Configuring and Running a Two-Step Fine-Tuning and Evaluation Pipeline
+
+### Building and Running the Pipeline
+
+## Preparing the Lambda functions for deploying a model to an endpoint
+
+### Setting Up a Lambda Function that reads a JSON file in S3
+
+### Setting Up the Lambda Function for checking if an endpoint exists
+
+### Setting Up the Lambda Function for deploying a model to a new endpoint
+
+### Setting Up the Lambda Function for deploying a model to an existing endpoint
+
+## Completing the LLMOps pipeline
+
+## Best Practices and Key Considerations for Building Automated ML Workflows
+
 ```
 from sagemaker.mlops.workflow.lambda_step import (
     LambdaStep,
