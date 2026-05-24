@@ -1,4 +1,4 @@
-# Automating LLMOps Workflows with SageMaker Pipelines
+# Chapter 9: Automating LLMOps Workflows with SageMaker Pipelines
 
 ## Setting Up the Project Environment and Dependencies
 
