@@ -549,29 +549,257 @@ pprint(execution)
 ### Building and Running the Pipeline
 
 ```
+%store -r unique
+%store -r role
+%store -r region
+%store -r prefix
+%store -r s3
+
+import json
+results = json.loads(open("results.json").read())
 ```
 
 ```
+import json
+
+results = json.loads(open("results.json").read())
+config = json.loads(open("context.json").read())
+
+unique = config["unique"]
+role = config["role"]
+region = config["region"]
+prefix = config["prefix"]
+s3 = config["s3"]
 ```
 
 ```
+from sagemaker.core.workflow.parameters import (
+    ParameterString
+)
+from sagemaker.core.helper.session_helper import (
+    Session, 
+    get_execution_role
+)
+from sagemaker.core.processing import ScriptProcessor
+from sagemaker.core.shapes import (
+    ProcessingInput, 
+    ProcessingOutput, 
+    ProcessingS3Output
+)
+from sagemaker.mlops.workflow.pipeline import Pipeline
+from sagemaker.mlops.workflow.steps import (
+    ProcessingStep
+)
+from sagemaker.core.workflow.pipeline_context import (  
+    PipelineSession
+)
+from sagemaker.core.workflow.functions import Join
+from sagemaker.core import image_uris
 ```
 
 ```
+sagemaker_session = Session()
+pipeline_session = PipelineSession()
+role = get_execution_role()
+```
+
+```
+sp = f"s3://{s3}/{prefix}"
+
+results_s3 = f"{sp}/input/"
+eval_dataset_s3 = f"{sp}/data/gen_qa.jsonl"
+custom_metric_s3 = f"{sp}/input/custom_metric.json"
+output_s3 = f"{sp}/output/"
+
+!aws s3 cp data/gen_qa.jsonl {eval_dataset_s3}
+!aws s3 cp custom_metric.json {custom_metric_s3}
+!aws s3 cp results.json {results_s3}
+```
+
+```
+results_param = ParameterString(
+    name="ResultsPath",
+    default_value=results_s3
+)
+
+dataset_param = ParameterString(
+    name="EvalDataset",
+    default_value=eval_dataset_s3
+)
+
+metric_param = ParameterString(
+    name="CustomMetricPath",
+    default_value=custom_metric_s3
+)
+
+output_param = ParameterString(
+    name="OutputPath",
+    default_value=output_s3
+)
+
+region_param = ParameterString(
+    name="Region",
+    default_value=region
+)
+```
+
+```
+eval_processor = ScriptProcessor(
+    image_uri=image_uris.retrieve(
+        framework="sklearn",
+        region=region,
+        version="1.2-1",
+        py_version="py3",
+        instance_type="ml.m5.xlarge",
+    ),
+    instance_type="ml.m5.xlarge",
+    instance_count=1,
+    base_job_name=f"llm-eval-{unique}",
+    sagemaker_session=pipeline_session,
+    role=role,
+)
+```
+
+```
+from sagemaker.core.shapes import (
+    ProcessingInput, 
+    ProcessingOutput, 
+    ProcessingS3Output, 
+    ProcessingS3Input
+)
+
+from sagemaker.core.workflow.functions import Join
+results_s3_uri = Join(
+    on="",
+    values=[
+        results_param,
+        "results.json"
+    ]
+)
+
+results_input = ProcessingInput(
+    input_name="results",
+    s3_input=ProcessingS3Input(
+        s3_uri=results_s3_uri,
+        local_path="/opt/ml/processing/input",
+        s3_data_type="S3Prefix",
+        s3_input_mode="File",
+        s3_data_distribution_type="ShardedByS3Key",
+    ),
+)
+```
+
+```
+local_path = "/opt/ml/processing/output"
+
+eval_step_args = eval_processor.run(
+    inputs=[results_input],
+    outputs=[
+        ProcessingOutput(
+            output_name="output",
+            s3_output=ProcessingS3Output(
+                s3_uri=output_param,
+                local_path=local_path,
+                s3_upload_mode="EndOfJob"
+            )
+        )
+    ],
+    code="code/evaluation.py",
+    arguments=[
+        "--eval-dataset", dataset_param,
+        "--custom-metric-path", metric_param,
+        "--output-path", output_param,
+        "--region", region_param,
+    ],
+)
+
+eval_step = ProcessingStep(
+    name=f"LLM-Eval-{unique}",
+    step_args=eval_step_args,
+)
+```
+
+```
+pipeline = Pipeline(
+    name=f"EvaluationPipeline-{unique}",
+    steps=[eval_step],
+    parameters=[
+        results_param,
+        dataset_param,
+        metric_param,
+        output_param,
+        region_param,
+    ],
+    sagemaker_session=pipeline_session,
+)
+```
+
+```
+pipeline.upsert(role_arn=role)
+```
+
+```
+execution = pipeline.start()
+```
+
+```
+eval_pipeline_execution_arn = execution.arn
+%store eval_pipeline_execution_arn
+```
+
+```
+%%time
+import time
+
+while True:
+    details = execution.describe()
+    status = details["PipelineExecutionStatus"]
+    print("Status:", status)
+
+    if status != "Executing":
+        break
+
+    time.sleep(60)
 ```
 
 ### Inspecting Pipeline Execution Logs
 
 ```
+%store -r eval_pipeline_execution_arn
+eval_pipeline_execution_arn
 ```
 
 ```
+from sagemaker.mlops.workflow.pipeline import (
+    PipelineExecution
+)
+from sagemaker.core.helper.session_helper import (
+    Session
+)
+
+sagemaker_session = Session()
+
+execution = PipelineExecution(
+    arn=eval_pipeline_execution_arn,
+    sagemaker_session=sagemaker_session,
+)
 ```
 
 ```
+from rich.pretty import pprint
+pprint(execution.describe())
 ```
 
 ```
+from pipeline_wrapper import PipelineExecution
+
+pipeline_execution = PipelineExecution(
+    execution=execution
+)
+```
+
+```
+pipeline_execution.step(1).logs()
 ```
 
 ## Configuring and Running a Two-Step Fine-Tuning and Evaluation Pipeline
@@ -579,26 +807,471 @@ pprint(execution)
 ### Building and Running the Pipeline
 
 ```
+import random
+import string
+from pathlib import Path
+
+
+class UniqueString:
+    file_path = Path("unique.txt")
+
+    @classmethod
+    def generate_string(cls, length=12):
+        return ''.join(
+            random.choices(
+                string.ascii_lowercase,
+                k=length
+            )
+        )
+
+    @classmethod
+    @property
+    def value(cls):
+        if not hasattr(cls, "_value"):
+            if cls.file_path.exists():
+                cls._value = cls.file_path.read_text()
+                cls._value = cls._value.strip()
+            else:
+                cls._value = cls.generate_string()
+                cls.file_path.write_text(cls._value)
+
+        return cls._value
 ```
 
 ```
+print(UniqueString.value)
 ```
 
 ```
+from sagemaker.core.workflow.parameters import (
+    ParameterString
+)
+from sagemaker.core.helper.session_helper import (
+    Session,
+    get_execution_role
+)
+from sagemaker.core.processing import (
+    ScriptProcessor
+)
+from sagemaker.core.shapes import (
+    ProcessingInput,
+    ProcessingOutput,
+    ProcessingS3Output,
+    ProcessingS3Input
+)
+from sagemaker.mlops.workflow.pipeline import (
+    Pipeline
+)
+from sagemaker.mlops.workflow.steps import (
+    ProcessingStep
+)
+from sagemaker.core.workflow.pipeline_context import (
+    PipelineSession
+)
+from sagemaker.core.workflow.functions import (
+    Join
+)
+from sagemaker.core import (
+    image_uris
+)
 ```
 
 ```
+unique = UniqueString.value
+```
+
+```
+sagemaker_session = Session()
+pipeline_session = PipelineSession()
+role = get_execution_role()
+region = sagemaker_session.boto_region_name
+
+prefix = f"pipeline-{unique}"
+s3 = sagemaker_session.default_bucket()
+```
+
+```
+train_dataset_s3 = (
+    f"s3://{s3}/{prefix}/data/data.jsonl"
+)
+
+eval_dataset_s3 = (
+    f"s3://{s3}/{prefix}/data/gen_qa.jsonl"
+)
+
+custom_metric_s3 = (
+    f"s3://{s3}/{prefix}/input/custom_metric.json"
+)
+
+train_output_s3 = (
+    f"s3://{s3}/{prefix}/training-output/"
+)
+
+eval_output_s3 = (
+    f"s3://{s3}/{prefix}/evaluation-output/"
+)
+```
+
+```
+!aws s3 cp data/data.jsonl {train_dataset_s3}
+!aws s3 cp data/gen_qa.jsonl {eval_dataset_s3}
+!aws s3 cp custom_metric.json {custom_metric_s3}
+```
+
+```
+role_arn_param = ParameterString(
+    name="TrainingRoleArn",
+    default_value=role
+)
+
+train_dataset_param = ParameterString(
+    name="Dataset",
+    default_value=train_dataset_s3
+)
+
+train_output_param = ParameterString(
+    name="TrainingOutputPath",
+    default_value=train_output_s3
+)
+```
+
+```
+mlflow_exp_param = ParameterString(
+    name="MLflowExperimentName",
+    default_value=f"sft-experiment-{unique}"
+)
+
+mlflow_run_param = ParameterString(
+    name="MLflowRunName",
+    default_value=f"run-{unique}"
+)
+
+region_param = ParameterString(
+    name="Region",
+    default_value=region
+)
+```
+
+```
+eval_dataset_param = ParameterString(
+    name="EvalDataset",
+    default_value=eval_dataset_s3
+)
+
+custom_metric_param = ParameterString(
+    name="CustomMetricPath",
+    default_value=custom_metric_s3
+)
+
+eval_output_param = ParameterString(
+    name="EvaluationOutputPath",
+    default_value=eval_output_s3
+)
+```
+
+```
+local_path = "/opt/ml/processing/output"
+
+train_processor = ScriptProcessor(
+    image_uri=image_uris.retrieve(
+        framework="sklearn",
+        region=region,
+        version="1.2-1",
+        py_version="py3",
+        instance_type="ml.m5.xlarge",
+    ),
+    instance_type="ml.m5.xlarge",
+    instance_count=1,
+    base_job_name=f"sfttrainer-job-{unique}",
+    sagemaker_session=pipeline_session,
+    role=role,
+)
+```
+
+```
+cache_config = CacheConfig(
+    enable_caching=True, 
+    expire_after="PT12H"
+)
+```
+
+```
+train_step_args = train_processor.run(
+    inputs=[],
+    outputs=[
+        ProcessingOutput(
+            output_name="output",
+            s3_output=ProcessingS3Output(
+                s3_uri=train_output_s3,
+                local_path=local_path,
+                s3_upload_mode="EndOfJob"
+            )
+        )
+    ],
+    code="code/fine_tuning.py",
+    arguments=[
+        "--dataset", train_dataset_param,
+        "--output-path", train_output_param,
+        "--mlflow-experiment-name", mlflow_exp_param,
+        "--mlflow-run-name", mlflow_run_param,
+        "--region", region_param,
+        "--role-arn", role_arn_param,
+    ],
+)
+
+train_step = ProcessingStep(
+    name=f"FineTuning-{unique}",
+    step_args=train_step_args,
+    cache_config=cache_config
+)
+```
+
+```
+eval_processor = ScriptProcessor(
+    image_uri=image_uris.retrieve(
+        framework="sklearn",
+        region=region,
+        version="1.2-1",
+        py_version="py3",
+        instance_type="ml.m5.xlarge",
+    ),
+    instance_type="ml.m5.xlarge",
+    instance_count=1,
+    base_job_name=f"llm-eval-{unique}",
+    sagemaker_session=pipeline_session,
+    role=role,
+)
+```
+
+```
+tpoc = train_step.properties.ProcessingOutputConfig
+ts3uri = tpoc.Outputs["output"].S3Output.S3Uri
+
+results_input = ProcessingInput(
+    input_name="results",
+    s3_input=ProcessingS3Input(
+        s3_uri=Join(
+            on="",
+            values=[ts3uri, "results.json"]
+        ),
+        local_path="/opt/ml/processing/input",
+        s3_data_type="S3Prefix",
+        s3_input_mode="File",
+        s3_data_distribution_type="FullyReplicated",
+    ),
+)
+```
+
+```
+local_path = "/opt/ml/processing/output"
+
+eval_step_args = eval_processor.run(
+    inputs=[
+        results_input
+    ],
+    outputs=[
+        ProcessingOutput(
+            output_name="output",
+            s3_output=ProcessingS3Output(
+                s3_uri=eval_output_param,
+                local_path=local_path,
+                s3_upload_mode="EndOfJob"
+            )
+        )
+    ],
+    code="code/evaluation.py",
+    arguments=[
+        "--eval-dataset", eval_dataset_param,
+        "--custom-metric-path", custom_metric_param,
+        "--output-path", eval_output_param,
+        "--region", region_param,
+    ],
+)
+
+eval_step = ProcessingStep(
+    name=f"Evaluation-{unique}",
+    step_args=eval_step_args,
+    depends_on=[train_step],
+    cache_config=cache_config
+)
+```
+
+```
+pipeline = Pipeline(
+    name=f"CompletePipeline-{unique}",
+    steps=[
+        train_step,
+        eval_step
+    ],
+    parameters=[
+        role_arn_param,
+        train_dataset_param,
+        train_output_param,
+        mlflow_exp_param,
+        mlflow_run_param,
+        region_param,
+        eval_dataset_param,
+        custom_metric_param,
+        eval_output_param,
+    ],
+    sagemaker_session=pipeline_session,
+)
+```
+
+```
+pipeline.upsert(role_arn=role)
+```
+
+```
+execution = pipeline.start(
+    parameters={
+        "Dataset": train_dataset_s3,
+        "TrainingOutputPath": train_output_s3,
+        "MLflowExperimentName": (
+            f"sft-experiment-{unique}"
+        ),
+        "MLflowRunName": (
+            f"run-{unique}"
+        ),
+        "Region": region,
+        "TrainingRoleArn": role,
+        "EvalDataset": eval_dataset_s3,
+        "CustomMetricPath": custom_metric_s3,
+        "EvaluationOutputPath": eval_output_s3,
+    }
+)
+```
+
+```
+pipeline_execution_arn = execution.arn
+%store pipeline_execution_arn
+```
+
+```
+%%time
+import time
+
+while True:
+    details = execution.describe()
+    status = details["PipelineExecutionStatus"]
+    print("Status:", status)
+
+    if status != "Executing":
+        break
+
+    time.sleep(60)
+```
+
+### Inspecting Pipeline Execution Logs 
+
+```
+%store -r pipeline_execution_arn
+pipeline_execution_arn
+```
+
+```
+from sagemaker.mlops.workflow.pipeline import (
+    PipelineExecution
+)
+from sagemaker.core.helper.session_helper import (
+    Session
+)
+
+sagemaker_session = Session()
+
+execution = PipelineExecution(
+    arn=pipeline_execution_arn,
+    sagemaker_session=sagemaker_session,
+)
+```
+
+```
+from rich.pretty import pprint
+pprint(execution.describe())
+```
+
+```
+from pipeline_wrapper import PipelineExecution
+
+pipeline_execution = PipelineExecution(
+    execution=execution
+)
+```
+
+```
+pipeline_execution.number_of_steps()
+```
+
+```
+pipeline_execution.step(1).name
+```
+
+```
+pipeline_execution.step(1).logs()
+```
+
+```
+pipeline_execution.step(2).name
+```
+
+```
+pipeline_execution.step(2).logs()
+```
+
+```
+pipeline_execution.outputs()
+```
+
+```
+output = pipeline_execution.outputs()[0]
+s3_path = output + "training_results.json"
+```
+
+```
+!aws s3 ls {s3_path}
+```
+
+```
+print(s3_path)
 ```
 
 ## Preparing the Lambda functions for deploying a model to an endpoint
 
 ### Setting Up a Lambda Function that reads a JSON file in S3
 
+```
+{
+  "s3_path": "<S3 PATH>"
+}
+```
+
 ### Setting Up the Lambda Function for checking if an endpoint exists
+
+```
+{
+  "endpoint_name": "endpoint-100"
+}
+```
 
 ### Setting Up the Lambda Function for deploying a model to a new endpoint
 
+```
+{
+  "endpoint_name": "endpoint-100",
+  "model_arn": "<MODEL ARN>",
+  "instance_type": "ml.g5.4xlarge"
+}
+```
+
 ### Setting Up the Lambda Function for deploying a model to an existing endpoint
+
+```
+{
+  "endpoint_name": "endpoint-100",
+  "model_arn": "<MODEL ARN>",
+  "instance_type": "ml.g5.4xlarge"
+}
+```
 
 ## Completing the LLMOps pipeline
 
