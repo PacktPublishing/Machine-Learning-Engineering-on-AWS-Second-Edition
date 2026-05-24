@@ -407,13 +407,188 @@ results = json.loads(open("results.json").read())
 
 ### Setting Up and Running LLM-as-a-Judge Model Evaluation
 
+```
+%store -r results
+%store -r unique
+%store -r role
+%store -r region
+%store -r prefix
+%store -r s3
+
+print("results:", results)
+print("unique:", unique)
+print("role:", role)
+print("region:", region)
+print("prefix:", prefix)
+print("s3:", s3)
+
+import json
+results = json.loads(open("results.json").read())
+```
+
+```
+import json
+
+results = json.loads(open("results.json").read())
+config = json.loads(open("context.json").read())
+
+unique = config["unique"]
+role = config["role"]
+region = config["region"]
+prefix = config["prefix"]
+s3 = config["s3"]
+```
+
+```
+experiment_name = results['mlflow_experiment_name']
+run_name = results['mlflow_run_name'] + "-eval"
+```
+
+```
+import json
+from rich.pretty import pprint
+
+with open("custom_metric.json", "r") as f:
+    custom_metric_dict = json.load(f)
+
+
+pprint(custom_metric_dict)
+```
+
+```
+custom_metrics = json.dumps([custom_metric_dict])
+```
+
+```
+eval_ds_path = f"s3://{s3}/{prefix}/eval/gen_qa.jsonl"
+eval_output_path = f"s3://{s3}/{prefix}/eval/output"
+```
+
+```
+!aws s3 cp data/gen_qa.jsonl {eval_ds_path}
+```
+
+```
+import boto3
+
+sm_client = boto3.client(
+    "sagemaker", 
+    region_name=region
+)
+```
+
+```
+group_name = results["model_package_group_name"]
+
+response = sm_client.list_model_packages(
+    ModelPackageGroupName=group_name,
+    SortBy="CreationTime",
+    SortOrder="Descending"
+)
+
+pprint(response)
+```
+
+```
+summary_list = response["ModelPackageSummaryList"]
+model_package_arn = summary_list[0]['ModelPackageArn']
+model_package_arn
+```
+
+```
+from sagemaker.train.evaluate import (
+    LLMAsJudgeEvaluator
+)
+
+evaluator_model = 'amazon.nova-pro-v1:0'
+builtin_metrics = ["Completeness", "Faithfulness"]
+```
+
+```
+evaluator = LLMAsJudgeEvaluator(
+    model=model_package_arn,
+    evaluator_model=evaluator_model,
+    dataset=eval_ds_path,
+    builtin_metrics=builtin_metrics,
+    custom_metrics=custom_metrics,
+    s3_output_path=eval_output_path,
+    evaluate_base_model=False,
+    mlflow_experiment_name=experiment_name,
+    mlflow_run_name=run_name
+)
+```
+
+```
+pprint(evaluator)
+```
+
+```
+execution = evaluator.evaluate()
+```
+
+```
+pprint(execution)
+```
+
+```
+execution.wait()
+```
+
+```
+execution.show_results(
+    limit=10, 
+    offset=0, 
+    show_explanations=False
+)
+```
+
+```
+pprint(execution)
+```
+
 ### Building and Running the Pipeline
 
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
+
 ### Inspecting Pipeline Execution Logs
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
 
 ## Configuring and Running a Two-Step Fine-Tuning and Evaluation Pipeline
 
 ### Building and Running the Pipeline
+
+```
+```
+
+```
+```
+
+```
+```
+
+```
+```
 
 ## Preparing the Lambda functions for deploying a model to an endpoint
 
