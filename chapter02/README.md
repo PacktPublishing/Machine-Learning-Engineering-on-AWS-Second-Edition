@@ -1,4 +1,4 @@
-# Building AI Agents with SageMaker AI and Bedrock AgentCore
+# Chapter 2: Building AI Agents with SageMaker AI and Bedrock AgentCore
 
 ## Deploying a Pretrained LLM with SageMaker AI
 
