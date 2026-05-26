@@ -1,4 +1,4 @@
-# Practical Data Management on AWS
+# Chapter 5: Practical Data Management on AWS
 
 ## Running SQL queries in Amazon Athena
 
