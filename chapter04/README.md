@@ -1,4 +1,4 @@
-# Chapter 3: Modernizing Analytics with a Managed Transactional Data Lake
+# Chapter 4: Modernizing Analytics with a Managed Transactional Data Lake
 
 ## Preparing and processing the synthetic data
 
