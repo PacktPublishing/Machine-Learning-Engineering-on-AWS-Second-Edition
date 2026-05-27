@@ -19,34 +19,151 @@ You can secure your copy of *Machine Learning Engineering on AWS — Second Edit
 
 In this chapter, you'll explore the fundamentals of generative AI on AWS and learn how to use various services and solutions to build AI agents. You will work with foundation models provided through Amazon Bedrock, cover key concepts and terminology, set up a SageMaker Studio space, and build your first AI agent using Strands Agents with tool integrations to enhance reasoning and problem-solving capabilities.
 
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Chapter 2: Building AI Agents with SageMaker AI and Bedrock AgentCore
 
 In this chapter, you'll learn how to build AI agents that interact with a SageMaker AI real-time inference endpoint. You will use Amazon Bedrock Knowledge Bases and Amazon S3 Vectors to build retrieval-augmented generation powered agents, while also exploring how Strands Agents and Bedrock AgentCore can integrate model inference, external tools, and knowledge retrieval into production-ready agent-based systems.
+
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
 
 In this chapter, you'll learn the fundamentals of machine learning engineering on AWS and use Amazon SageMaker AI to implement end-to-end machine learning workflows. You will train and deploy an XGBoost model, fine-tune a BERT model, and explore how SageMaker AI simplifies training, inference, and model lifecycle management through managed capabilities.
 
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Chapter 4: Modernizing Analytics with a Managed Transactional Data Lake
 
 In this chapter, you'll build and work with a transactional data lake using Amazon S3 tables. You will create an Amazon S3 table bucket, launch an Amazon EMR cluster with Apache Iceberg, run queries using Apache Spark, and explore time travel queries to analyze how datasets evolve over time.
+
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## Chapter 5: Practical Data Management on AWS
 
 In this chapter, you'll explore AWS services and capabilities that support data management for analytics and machine learning workloads. You will work with AWS Lake Formation permissions, query data using Amazon Athena, ingest data into Amazon SageMaker Feature Store, and retrieve data from both the online and offline feature stores.
 
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Chapter 6: Pragmatic Data Processing on AWS
 
 In this chapter, you'll learn how to use SageMaker Processing jobs for resource-intensive data processing workloads. You will run a back-translation workflow using SageMaker Processing, prepare datasets and scripts, and explore best practices for designing, managing, scaling, and securing data processing workflows.
+
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## Chapter 7: SageMaker AI Model Training and Tuning Capabilities
 
 In this chapter, you'll fine-tune a large language model using Amazon SageMaker AI as part of an end-to-end machine learning workflow. You will track experiments using MLflow, execute supervised fine-tuning jobs, perform hyperparameter tuning to identify the best-performing model, and deploy the final model to a real-time inference endpoint.
 
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Chapter 8: SageMaker AI Model Deployment Options and Strategies
 
 In this chapter, you'll explore different deployment options and strategies in Amazon SageMaker AI. You will deploy models using real-time, serverless, asynchronous, and batch inference options, while also practicing advanced deployment techniques such as shadow testing, canary traffic shifting, and inference data capture for monitoring and evaluation.
 
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Chapter 9: Automating LLMOps Workflows with SageMaker Pipelines
 
 In this chapter, you'll design and operationalize LLMOps pipelines using SageMaker Pipelines. You will build single-step and multi-step workflows, integrate AWS Lambda-based orchestration steps, and learn best practices for building scalable, maintainable, secure, and cost-efficient production-grade machine learning pipelines.
+
+**Chapter Resources**:
+
+<table>
+  <tr>
+    <td>Files</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09
+      </a>
+    </td>
+  </tr>
+</table>
