@@ -19,6 +19,15 @@ You can secure your copy of *Machine Learning Engineering on AWS — Second Edit
 
 In this chapter, you'll explore the fundamentals of generative AI on AWS and learn how to use various services and solutions to build AI agents. You will work with foundation models provided through Amazon Bedrock, cover key concepts and terminology, set up a SageMaker Studio space, and build your first AI agent using Strands Agents with tool integrations to enhance reasoning and problem-solving capabilities.
 
+We will cover the following topics in this chapter:
+
+- Generative AI for the modern machine learning engineer
+- Exploring foundation models in Amazon Bedrock
+- Setting up and configuring your SageMaker Studio environment
+- Configuring IAM permissions for your SageMaker Studio Space
+- Introduction to AI agents with Amazon Bedrock and Strands Agents
+
+
 **Chapter Resources**:
 
 <table>
@@ -35,6 +44,17 @@ In this chapter, you'll explore the fundamentals of generative AI on AWS and lea
 ## Chapter 2: Building AI Agents with SageMaker AI and Bedrock AgentCore
 
 In this chapter, you'll learn how to build AI agents that interact with a SageMaker AI real-time inference endpoint. You will use Amazon Bedrock Knowledge Bases and Amazon S3 Vectors to build retrieval-augmented generation powered agents, while also exploring how Strands Agents and Bedrock AgentCore can integrate model inference, external tools, and knowledge retrieval into production-ready agent-based systems.
+
+To help you gain hands-on experience running AI agents with SageMaker AI, Strands Agents, and Bedrock AgentCore, we will cover the following topics in this chapter:
+
+- Deploying a pretrained LLM with SageMaker AI
+- Building AI agents with Amazon SageMaker AI and Strands Agents
+- Building AI agents with Amazon Bedrock AgentCore
+- Deploying production-ready agents with Bedrock AgentCore Runtime
+- Setting up an Amazon Bedrock Knowledge Base
+- Building a RAG-powered AI agent with Strands Agents
+- Building a RAG-powered AI agent that interacts with a SageMaker AI inference endpoint
+
 
 **Chapter Resources**:
 
@@ -53,6 +73,18 @@ In this chapter, you'll learn how to build AI agents that interact with a SageMa
 
 In this chapter, you'll learn the fundamentals of machine learning engineering on AWS and use Amazon SageMaker AI to implement end-to-end machine learning workflows. You will train and deploy an XGBoost model, fine-tune a BERT model, and explore how SageMaker AI simplifies training, inference, and model lifecycle management through managed capabilities.
 
+To help you explore how you can use Amazon SageMaker AI to implement end-to-end ML engineering workflows involving both traditional ML models and foundation models, this chapter covers the following sections:
+
+- Setting up and preparing your JupyterLab notebook
+- Preparing a synthetic dataset for binary classification
+- Training an XGBoost binary classifier
+- Deploying an XGBoost model to a real-time inference endpoint
+- Setting up BERT fine-tuning with SageMaker JumpStart
+- Using a smaller dataset for fine-tuning
+- Running the BERT model fine-tuning job
+- Deploying the fine-tuned model to a real-time inference endpoint
+
+
 **Chapter Resources**:
 
 <table>
@@ -69,6 +101,15 @@ In this chapter, you'll learn the fundamentals of machine learning engineering o
 ## Chapter 4: Modernizing Analytics with a Managed Transactional Data Lake
 
 In this chapter, you'll build and work with a transactional data lake using Amazon S3 tables. You will create an Amazon S3 table bucket, launch an Amazon EMR cluster with Apache Iceberg, run queries using Apache Spark, and explore time travel queries to analyze how datasets evolve over time.
+
+We will cover the following topics in this chapter:
+
+- Preparing and processing the synthetic data
+- Creating an Amazon S3 table bucket
+- Launching an Amazon EMR cluster with Apache Iceberg installed
+- Performing Apache Iceberg queries on S3 tables with Apache Spark
+- Performing time travel queries on S3 tables
+
 
 **Chapter Resources**:
 
@@ -87,6 +128,15 @@ In this chapter, you'll build and work with a transactional data lake using Amaz
 
 In this chapter, you'll explore AWS services and capabilities that support data management for analytics and machine learning workloads. You will work with AWS Lake Formation permissions, query data using Amazon Athena, ingest data into Amazon SageMaker Feature Store, and retrieve data from both the online and offline feature stores.
 
+To help you build practical data management skills for modern cloud-based ML workflows, we will cover the following topics in this chapter:
+
+- Working with AWS Lake Formation permissions
+- Running SQL queries in Amazon Athena
+- Ingesting data into a SageMaker feature store
+- Adding searchable metadata to the features
+- Retrieving data from the online and offline feature stores
+
+
 **Chapter Resources**:
 
 <table>
@@ -103,6 +153,14 @@ In this chapter, you'll explore AWS services and capabilities that support data 
 ## Chapter 6: Pragmatic Data Processing on AWS
 
 In this chapter, you'll learn how to use SageMaker Processing jobs for resource-intensive data processing workloads. You will run a back-translation workflow using SageMaker Processing, prepare datasets and scripts, and explore best practices for designing, managing, scaling, and securing data processing workflows.
+
+We will cover the following topics in this chapter:
+
+- Getting started with SageMaker Processing jobs
+- Running your first SageMaker Processing job
+- Preparing the input data and script for the back translation job
+- Automating back translation workflows with SageMaker Processing jobs
+
 
 **Chapter Resources**:
 
@@ -121,6 +179,15 @@ In this chapter, you'll learn how to use SageMaker Processing jobs for resource-
 
 In this chapter, you'll fine-tune a large language model using Amazon SageMaker AI as part of an end-to-end machine learning workflow. You will track experiments using MLflow, execute supervised fine-tuning jobs, perform hyperparameter tuning to identify the best-performing model, and deploy the final model to a real-time inference endpoint.
 
+We will cover the following topics in this chapter:
+
+- Setting up a serverless MLflow App
+- Fine-tuning an LLM on Amazon SageMaker AI
+- Deploying the Fine-Tuned Model
+- Performing Hyperparameter Tuning with Amazon SageMaker AI
+- Deploying the Best-Performing Model from Hyperparameter Tuning
+
+
 **Chapter Resources**:
 
 <table>
@@ -138,6 +205,17 @@ In this chapter, you'll fine-tune a large language model using Amazon SageMaker 
 
 In this chapter, you'll explore different deployment options and strategies in Amazon SageMaker AI. You will deploy models using real-time, serverless, asynchronous, and batch inference options, while also practicing advanced deployment techniques such as shadow testing, canary traffic shifting, and inference data capture for monitoring and evaluation.
 
+This chapter covers the following topics:
+
+- Preparing your JupyterLab Notebook for model deployment
+- Deploying your model to a real-time inference endpoint
+- Deploying your model to a serverless inference endpoint
+- Running batch inference with batch transform
+- Deploying your model to an asynchronous inference endpoint
+- Setting up a shadow test with a SageMaker inference endpoint
+- Using canary traffic shifting when performing blue/green deployments
+
+
 **Chapter Resources**:
 
 <table>
@@ -154,6 +232,17 @@ In this chapter, you'll explore different deployment options and strategies in A
 ## Chapter 9: Automating LLMOps Workflows with SageMaker Pipelines
 
 In this chapter, you'll design and operationalize LLMOps pipelines using SageMaker Pipelines. You will build single-step and multi-step workflows, integrate AWS Lambda-based orchestration steps, and learn best practices for building scalable, maintainable, secure, and cost-efficient production-grade machine learning pipelines.
+
+This chapter covers the following topics:
+
+- Setting up the project environment and dependencies
+- Building and Running the Single-Step Fine-Tuning Pipeline
+- Building and Running the Single-Step Evaluation Pipeline
+- Configuring and Running a Two-Step Fine-Tuning and Evaluation Pipeline
+- Preparing the Lambda functions for deploying a model to an endpoint
+- Completing the LLMOps pipeline
+- Best Practices and Key Considerations for Building Automated ML Workflows
+
 
 **Chapter Resources**:
 
