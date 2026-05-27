@@ -1,5 +1,9 @@
 # Chapter 2: Building AI Agents with SageMaker AI and Bedrock AgentCore
 
+This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
+
+![Machine Learning Engineering on AWS — Second Edition](../book-cover.png)
+
 ## Deploying a Pretrained LLM with SageMaker AI
 
 ```
