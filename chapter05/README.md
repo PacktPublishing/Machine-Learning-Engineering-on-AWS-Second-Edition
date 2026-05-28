@@ -6,6 +6,24 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical requirements
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "sagemaker.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+```
+
 ## Running SQL queries in Amazon Athena
 
 ### Using the AWS CLI to run SQL queries with Amazon Athena
@@ -38,7 +56,7 @@ aws athena start-query-execution \
 ```
 
 ```
-aws athena get-query-execution \ 
+aws athena get-query-execution \
   --query-execution-id <QUERY_EXECUTION_ID>
 ```
 
@@ -160,6 +178,10 @@ SQL(f"DELETE FROM { table } WHERE is_spam = True")
 ```
 
 ```
+SQL(f"""SELECT COUNT(*) AS spam_count FROM { table } WHERE is_spam = True""")
+```
+
+```
 df = SQL(f"SELECT * FROM { table }")
 print(df)
 ```
@@ -181,24 +203,421 @@ aws s3 mb s3://$UPLOAD_BUCKET
 aws s3 cp tmp/sentiments_data.csv s3://$UPLOAD_BUCKET/
 ```
 
-## Running SQL queries in Amazon Athena
-
-### Using the AWS CLI to run SQL queries with Amazon Athena
-### Using Boto3 to run SQL queries with Amazon Athena
-
 ## Ingesting data into a SageMaker Feature Store
 
+### Setting up a SageMaker Notebook instance
+
+```
+UPLOAD_BUCKET="<NAME OF EXISTING S3 BUCKET>"
+aws s3 cp s3://$UPLOAD_BUCKET/sentiments_data.csv .
+```
+
+```
+cp sentiments_data.csv SageMaker/
+```
+
+```
+%pip uninstall -y sagemaker
+%pip install "sagemaker==3.5.0"
+```
+
+```
+import warnings
+
+m = "Field .* has conflict with protected namespace"
+
+warnings.filterwarnings(
+    "ignore",
+    message=m
+)
+```
+
+```
+from sagemaker.mlops.feature_store import (
+    FeatureGroup,
+    FeatureMetadata,
+    OnlineStoreConfig,
+    OfflineStoreConfig,
+    S3StorageConfig,
+    load_feature_definitions_from_dataframe,
+    ingest_dataframe,
+    create_athena_query,
+)
+```
+
 ### Preparing the data to be ingested into the Feature Store
+
+```
+import pandas as pd
+df = pd.read_csv("sentiments_data.csv")
+```
+
+```
+df = df.drop('is_spam', axis=1)
+```
+
+```
+from datetime import datetime
+
+def get_event_time(date_string):
+    obj = datetime.strptime(date_string, '%Y-%m-%d')
+    output = float(obj.timestamp())
+    return output
+```
+
+```
+first_event_time = get_event_time('2024-01-01')
+df['event_time'] = first_event_time
+```
+
+```
+df.to_csv("feature_store_01.csv", index=False)
+```
+
+```
+second_event_time = get_event_time('2025-01-01')
+
+for index, row in df.iterrows():
+    if row['tag'] == 'NEUTRAL':
+        new_tag = 'POSITIVE'        
+        df.at[index, 'tag'] = new_tag
+        df.at[index, 'event_time'] = second_event_time
+```
+
+```
+df.to_csv("feature_store_02.csv", index=False)
+```
+
 ### Ingesting data into a Feature Store
+
+```
+from time import sleep
+from boto3 import Session as BotoSession
+
+boto_session = BotoSession()
+region = boto_session.region_name
+client = boto_session.client
+
+c1 = client(service_name='sagemaker', 
+            region_name=region)
+
+service_name='sagemaker-featurestore-runtime'
+c2 = client(service_name=service_name,
+            region_name=region)
+```
+
+```
+import pandas as pd
+df_01 = pd.read_csv("feature_store_01.csv")
+df_02 = pd.read_csv("feature_store_02.csv")
+```
+
+```
+defs = load_feature_definitions_from_dataframe(df_01)
+```
+
+```
+import boto3
+sts = boto3.client("sts")
+account_id = sts.get_caller_identity()["Account"]
+
+s3_bucket_name = f"sagemaker-{region}-{account_id}"
+s3_input = f"s3://{s3_bucket_name}/store/input"
+s3_output = f"s3://{s3_bucket_name}/store/output"
+```
+
+```
+from sagemaker.core.helper.session_helper import (
+    get_execution_role
+)
+
+role_arn = get_execution_role()
+```
+
+```
+group_name = "sentiments-feature-group"
+
+FeatureGroup.create(
+    feature_group_name=group_name,
+    feature_definitions=defs,
+    record_identifier_feature_name="unique_id",
+    event_time_feature_name="event_time",
+    role_arn=role_arn,
+    online_store_config=OnlineStoreConfig(
+        enable_online_store=True
+    ),
+    offline_store_config=OfflineStoreConfig(
+        s3_storage_config=S3StorageConfig(
+            s3_uri=s3_input
+        )
+    ),
+)
+```
+
+```
+def get_status(group_name="sentiments-feature-group"):
+    fg = FeatureGroup.get(
+        feature_group_name=group_name
+    )
+    return fg.feature_group_status
+
+print(get_status())
+```
+
+```
+while get_status() == "Creating":
+    print("Waiting...")
+    sleep(10)
+
+print(get_status())
+```
+
+```
+ingest_dataframe(
+    feature_group_name="sentiments-feature-group",
+    data_frame=df_01,
+    max_workers=3,
+    wait=True,
+)
+
+ingest_dataframe(
+    feature_group_name="sentiments-feature-group",
+    data_frame=df_02,
+    max_workers=3,
+    wait=True,
+)
+```
 
 ## Adding searchable metadata to the features
 
-### Updating the feature metadata
-### Searching features in an existing feature group using the metadata
+```
+metadata = FeatureMetadata.get(
+    feature_group_name="sentiments-feature-group",
+    feature_name="unique_id"
+)
+metadata.update(
+    description="UUID of the record"
+)
+```
+
+```
+from sagemaker.mlops.feature_store import (
+    FeatureParameter
+)
+
+metadata.update(
+    description="UUID of the record",
+    parameter_additions=[
+        FeatureParameter(
+            key="generated", 
+            value="true"
+        ),
+        FeatureParameter(
+            key="another-key", 
+            value="another-value"
+        ),
+    ]
+)
+```
+
+```
+descriptions = {
+    "unique_id": "UUID of the record",
+    "statement": "Statement or comment of a user",
+    "tag": "Sentiment tag based on score",
+    "date": "When the comment was shared",
+    "event_time": "Feature store event time value",
+}
+
+for feature_name, desc in descriptions.items():
+    meta = FeatureMetadata.get(
+        feature_group_name="sentiments-feature-group",
+        feature_name=feature_name
+    )
+    meta.update(description=desc)
+```
+
+```
+c1.search(Resource="FeatureMetadata")
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'FeatureType', 
+         'Operator': 'Equals', 
+         'Value': 'Fractional'}
+    ]}
+)
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'Description', 
+         'Operator': 'Contains', 
+         'Value': 'comment'}
+    ]}
+)
+```
+
+```
+c1.search(
+    Resource="FeatureMetadata", 
+    SearchExpression={'Filters': [
+        {'Name': 'Parameters.generated', 
+         'Operator': 'Equals', 
+         'Value': 'true'}
+    ]}
+)
+```
 
 ## Retrieving data from the online and offline feature stores
-### Retrieving data from the online feature store
-### Retrieving data from the offline feature store
+
+```
+first_id = df_01.iloc[0].unique_id
+```
+
+```
+first_id
+```
+
+```
+feature_group = FeatureGroup.get(
+    feature_group_name="sentiments-feature-group"
+)
+
+response = feature_group.get_record(
+    record_identifier_value_as_string=str(first_id)
+)
+```
+
+```
+from pprint import pprint
+
+clean = {
+    "expires_at": response.expires_at,
+    "record": [
+        { "feature": f.feature_name, 
+          "value": f.value_as_string }
+        for f in response.record
+    ]
+}
+
+pprint(
+    clean, 
+    indent=2, 
+    width=60, 
+    compact=True, 
+    sort_dicts=False
+)
+```
+
+```
+offline_config = feature_group.offline_store_config
+storage_config = offline_config.s3_storage_config
+config_s3_uri = storage_config.resolved_output_s3_uri
+!aws s3 ls { config_s3_uri } --recursive
+```
+
+```
+from sagemaker.core.helper.session_helper import (
+    Session
+)
+
+session = Session()
+group_name = "sentiments-feature-group"
+
+query = create_athena_query(
+    group_name, 
+    session=session
+)
+```
+
+```
+pprint(vars(query))
+```
+
+```
+table = query.table_name
+```
+
+```
+def SQL(
+    statement: str,
+    feature_group_name="sentiments-feature-group",
+    session=session,
+    output_location=s3_output,
+    no_df=False
+):
+    print("---" * 20)
+    print(f"QUERY: {statement}")
+    print("---" * 20)
+
+    query = create_athena_query(
+        feature_group_name,
+        session=session
+    )
+
+    query.run(
+        query_string=statement,
+        output_location=output_location
+    )
+
+    query.wait()
+
+    if not no_df:
+        return query.as_dataframe()
+
+    return None
+```
+
+```
+SQL(f"SELECT * FROM { table }")
+```
+
+```
+SQL(f"SELECT COUNT(*) FROM { table }")
+```
+
+```
+SQL(f"""
+WITH latest_versions AS (
+    SELECT *,ROW_NUMBER() 
+    OVER (
+        PARTITION BY unique_id 
+        ORDER BY event_time DESC
+   ) AS rn
+    FROM {table}
+)
+SELECT * FROM latest_versions WHERE rn = 1;
+""")
+```
+
+```
+SQL(f"""
+CREATE OR REPLACE VIEW latest_versions_view AS
+WITH latest_versions AS (
+    SELECT *,ROW_NUMBER() 
+       OVER (
+           PARTITION BY unique_id 
+           ORDER BY event_time DESC
+       ) AS rn
+    FROM { table }
+)
+SELECT * FROM latest_versions WHERE rn = 1;
+""", no_df=True)
+```
+
+```
+SQL("SELECT * FROM latest_versions_view")
+```
+
+```
+feature_group.delete()
+```
 
 ## Where to Get Your Copy
 
