@@ -127,3 +127,8 @@ prompt = """I was born on June 1, 1998, and I am 10 years older than my brother.
 ```
 agent(prompt)
 ```
+
+
+## Where to Get Your Copy
+
+You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
