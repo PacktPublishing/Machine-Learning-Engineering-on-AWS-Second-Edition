@@ -256,3 +256,20 @@ This chapter covers the following topics:
     </td>
   </tr>
 </table>
+
+
+## Get to Know the Author
+
+**Joshua Arvin Lat** serves as the Vice President of Cybersecurity and AI for **Axos**. He previously held Chief Technology Officer and Director roles across SaaS platforms, AI automation companies, e-commerce startups, and digital agencies. Because of his proven track record in leading digital transformation within organizations, he has been recognized as one of the winners of the prestigious Orange Boomerang: Digital Leader of the Year 2023 award. 
+
+![Machine Learning Engineering on AWS 2nd ed](arvs-machine-learning-engineering-on-aws.png)
+
+Years ago, he led a team that won first place in a global cybersecurity competition for their published research. He is also an AWS AI Hero and has spoken at several international conferences on practical applications of generative AI, software engineering, cybersecurity, and management.
+
+## Other books by the author
+
+<a href="https://www.packtpub.com/product/machine-learning-with-amazon-sagemaker-cookbook/9781800567030"><img src="https://static.packt-cdn.com/products/9781800567030/cover/smaller" alt="Machine Learning with Amazon SageMaker Cookbook" width="20%" height="250px"></a>
+<a href="https://www.packtpub.com/product/machine-learning-engineering-on-aws/9781803247595"><img src="https://static.packt-cdn.com/products/9781803247595/cover/smaller" alt="Machine Learning Engineering on AWS" width="20%" height="250px"></a>
+<a href="https://www.packtpub.com/product/building-and-automating-penetration-testing-labs-in-the-cloud/9781837632398"><img src="https://static.packt-cdn.com/products/9781837632398/cover/smaller" alt="Building and Automating Penetration Testing Labs in the Cloud" width="20%" height="250px"></a>
+<a href="https://www.oreilly.com/library/view/learning-serverless-security/9781098149000/"><img src="https://www.oreilly.com/covers/urn:orm:book:9781098149000/296w/?format=webp" alt="Learning Serverless Security" width="20%" height="250px"></a>
+
