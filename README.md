@@ -1,6 +1,6 @@
 # Machine Learning Engineering on AWS — Second Edition<br />Build, deploy, and operationalize LLMs, AI agents, and generative AI systems on AWS
 
-Welcome to the official GitHub account for *Machine Learning Engineering on AWS — Second Edition* by [Joshua Arvin Lat](https://www.amazon.com/author/arvs), published by Packt. Here you'll find the repositories and Gists referenced throughout the [book](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088).
+Welcome to the official GitHub repository for *Machine Learning Engineering on AWS — Second Edition* by [Joshua Arvin Lat](https://www.amazon.com/author/arvs), published by Packt. Here you'll find the commands and code blocks referenced throughout the [book](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088).
 
 
 ![Machine Learning Engineering on AWS — Second Edition](book-cover.png)
