@@ -18,6 +18,15 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical Requirements
+
+Before proceeding with the hands-on examples in this chapter, ensure that the following prerequisites and setup requirements are in place:
+
+- **Sufficient account-level quota for selected ML instance types**: When deploying models, ensure that the applied account-level quota value for the selected ML instance types (for example, ml.g5.24xlarge for endpoint usage) is set to at least 1. If the quota value is 0, SageMaker AI will not be able to provision the required compute resources, and the job or endpoint creation will fail. You can review and request quota increases through the Service Quotas console (within the AWS Management Console).
+- **An existing SageMaker Studio space**: You can use the SageMaker Studio space (mle-on-aws-space) that you set up in Chapter 1 to follow along with the examples in this book.
+- **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
+- **A new IAM user with AdministratorAccess permissions**: You can create this IAM user through the IAM Console, by typing IAM in the search bar, and then selecting IAM from the list of results. Once in the IAM console, select Users from the left-hand menu and then click the Create user button. Enter the desired user name (superadmin), ensure that the checkbox for Provide user access to the AWS Management Console is checked, choose I want to create an IAM user, and click Next. On the Set permissions page, choose Attach policies directly, then search for and select the AdministratorAccess policy. Continue through the remaining steps, and finally clicking the Create user button. After completion, you'll be able to use the new IAM user to log in to the AWS Management Console with full administrative permissions.
+
 ## Deploying a Pretrained LLM with SageMaker AI
 
 ```
