@@ -2,7 +2,7 @@
 
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials. 
 
-![Machine Learning Engineering on AWS — Second Edition](../book-cover.png)
+![Machine Learning Engineering on AWS 2nd ed](../books.png)
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
@@ -12,7 +12,6 @@ We must have the following ready before we jump into the hands-on examples of th
 
 - **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
 - **A new AWS account**: Creating and using a new AWS account is highly recommended for the hands-on exercises and solutions in this book. This will ensure that your work-related production (or staging) environment resources remain separate and secure. Feel free to create this AWS account by going to https://aws.amazon.com/free/. On this page, locate and click on the Create an AWS Account button to proceed with the creation of the account. Make sure to read the available AWS documentation along with the relevant FAQ pages to have a better awareness of what is free (and what is not free) when using various services in AWS.
-
 
 ## Exploring foundation models in Amazon Bedrock
 
@@ -157,4 +156,16 @@ Here are the links and resources referenced throughout this chapter for your con
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
 
-To make it easier for you to follow along, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file that serves as a companion resource, offering additional instructions, references, and key notes to support the examples presented throughout the book.
+## Get to Know the Author
+
+**Joshua Arvin Lat** serves as the Vice President of Cybersecurity and AI for **Axos**. He previously held Chief Technology Officer and Director roles across SaaS platforms, AI automation companies, e-commerce startups, and digital agencies. Because of his proven track record in leading digital transformation within organizations, he has been recognized as one of the winners of the prestigious Orange Boomerang: Digital Leader of the Year 2023 award. 
+
+![Machine Learning Engineering on AWS 2nd ed](../arvs-machine-learning-engineering-on-aws.png)
+
+Years ago, he led a team that won first place in a global cybersecurity competition for their published research. He is also an AWS AI Hero and has spoken at several international conferences on practical applications of generative AI, software engineering, cybersecurity, and management.
+
+## Other Books by the Author
+
+You can find the author's other books on AI and Cybersecurity by visiting the [Amazon Author Page](https://amazon.com/author/arvs)
+
+![Other 4 books](../previous-books.png)
