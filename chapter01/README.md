@@ -148,6 +148,10 @@ Here are the links and resources referenced throughout this chapter for your con
 - https://www.youtube.com/watch?v=SAeZMA0KaFA
 - https://www.youtube.com/watch?v=1bt11sLo5Pw
 - https://aws.amazon.com/blogs/machine-learning/getting-started-with-cross-region-inference-in-amazon-bedrock/
+- https://aws.amazon.com/bedrock/faqs/
+- https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-engineering-guidelines.html
+- https://aws.amazon.com/blogs/machine-learning/welcome-to-a-new-era-of-building-in-the-cloud-with-generative-ai-on-aws/
+- https://aws.amazon.com/blogs/machine-learning/best-practices-to-build-generative-ai-applications-on-aws/
 
 ## Where to Get Your Copy
 
