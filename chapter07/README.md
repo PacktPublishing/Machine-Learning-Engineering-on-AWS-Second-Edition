@@ -27,7 +27,7 @@ Before proceeding with the hands-on examples in this chapter, ensure that the fo
 - **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
 
 
-## Setting up a serverless MLFlow App
+## Setting up a serverless MLflow App
 
 ```
 %pip install --upgrade boto3
