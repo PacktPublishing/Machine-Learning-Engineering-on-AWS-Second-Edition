@@ -138,7 +138,7 @@ prompt = """I was born on June 1, 1998, and I am 10 years older than my brother.
 agent(prompt)
 ```
 
-## Links
+## Links and Resources
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
