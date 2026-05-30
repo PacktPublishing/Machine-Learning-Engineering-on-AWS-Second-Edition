@@ -2,12 +2,15 @@
 
 Welcome to the official GitHub repository for *Machine Learning Engineering on AWS — Second Edition* by [Joshua Arvin Lat](https://www.amazon.com/author/arvs), published by Packt. Here you'll find the commands and code blocks referenced throughout the [book](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088).
 
-
-![Machine Learning Engineering on AWS — Second Edition](book-cover.png)
+![Machine Learning Engineering on AWS — Second Edition](books.png)
 
 This book is for AI engineers, data scientists, machine learning engineers, and technology leaders who want to deepen their understanding of machine learning engineering, generative AI, large language models, retrieval-augmented generation, AI agents, and MLOps on AWS. A foundational understanding of artificial intelligence, machine learning, generative AI, and cloud engineering concepts is recommended.
 
-A lot has changed since I wrote the first edition of this book. Back then, generative AI was still emerging, and many organizations were only beginning to explore how large language models (LLMs) could change the way we build machine learning systems and workflows. Today, generative AI has become a core part of real-world applications, which means building modern AI systems now requires much more than just training models. It also involves production engineering, LLMOps automation, security, evaluation, and scalable cloud-based architectures. In this second edition, I want to help you understand how these modern AI systems are built on AWS through practical, hands-on examples covering generative AI, AI agents, data engineering, model deployment, evaluation, and automation, so you can confidently design and operate production-ready AI solutions.
+A lot has changed since I wrote the first edition of this book. Back then, generative AI was still emerging, and many organizations were only beginning to explore how large language models (LLMs) could change the way we build machine learning systems and workflows. Today, generative AI has become a core part of real-world applications, which means building modern AI systems now requires much more than just training models. 
+
+![Machine Learning Engineering on AWS — Second Edition](book-cover.png)
+
+It also involves production engineering, LLMOps automation, security, evaluation, and scalable cloud-based architectures. In this second edition, I want to help you understand how these modern AI systems are built on AWS through practical, hands-on examples covering generative AI, AI agents, data engineering, model deployment, evaluation, and automation, so you can confidently design and operate production-ready AI solutions.
 
 
 ## Where to Get Your Copy
@@ -271,3 +274,4 @@ Years ago, he led a team that won first place in a global cybersecurity competit
 You can find the author's other books on AI and Cybersecurity by visiting the [Amazon Author Page](https://amazon.com/author/arvs)
 
 ![Other 4 books](previous-books.png)
+
