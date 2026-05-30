@@ -16,6 +16,17 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical requirements
+
+Before proceeding with the hands-on examples in this chapter, ensure that the following prerequisites and setup requirements are in place:
+
+- **An existing SageMaker Studio space**: You can use the SageMaker Studio space (mle-on-aws-space) that you set up in Chapter 1. Ensure that the space is configured with sufficient storage capacity (for example, at least 100 GB) to accommodate datasets, model artifacts, logs, and intermediate training outputs generated throughout the examples in this chapter.
+
+- **Sufficient account-level quota for selected ML instance types**: Ensure that your AWS account has the required applied account-level quota values for the SageMaker AI ML instance types used in this chapter. You should have at least 1× ml.g5.4xlarge for the real-time inference endpoint (ml.g5.4xlarge for endpoint usage), at least 3× ml.m5.xlarge training instances to support hyperparameter tuning (ml.m5.xlarge for spot training job usage), and at least 1× ml.m5.xlarge for the real-time inference endpoint (ml.m5.xlarge for endpoint usage). If any of these quotas are set to 0 or below the required level, SageMaker AI will not be able to provision the necessary compute resources, causing training, tuning, or endpoint creation to fail. You can review and adjust these limits in the Service Quotas console in the AWS Management Console.
+
+- **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
+
+
 ## Setting up a serverless MLFlow App
 
 ```
