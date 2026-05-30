@@ -18,21 +18,36 @@ To help you get started more easily, the repository includes a [DETAILS.md](http
 
 ## Technical requirements
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "sagemaker.amazonaws.com"
-            },
-            "Action": "sts:AssumeRole"
-        }
-    ]
-}
-```
+We must have the following ready before we jump into the hands-on examples of this chapter:
+
+- **A new IAM role named SageMakerAdminRole with the AmazonSageMakerAccessFullAccess and AmazonS3FullAccess permission policies attached**: You can create this IAM role by first opening the AWS Management Console, typing IAM in the search bar, and then selecting IAM from the list of results. Once in the IAM console, select Roles in the left-hand menu and then click the Create role button. From there, select Custom trust policy from the list of options under Trusted entity type. Replace the custom trust policy with the following trust policy that allows SageMaker to assume the role:
+
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "",
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "sagemaker.amazonaws.com"
+                },
+                "Action": "sts:AssumeRole"
+            }
+        ]
+    }
+    ```
+
+    Continue to the permissions page and attach the AmazonSageMakerFullAccess and AmazonS3FullAccess policies. After completing the steps and saving the role (using the name SageMakerAdminRole), it will be ready for use by SageMaker resources that require these permissions. This role essentially grants SageMaker the administrative-level permissions required to operate fully within your AWS account.
+
+- **A new IAM user with AdministratorAccess permissions**: You can create this IAM user through the IAM Console, by typing IAM in the search bar, and then selecting IAM from the list of results. Once in the IAM console, select Users from the left-hand menu and then click the Create user button. Enter the desired user name (superadmin), ensure that the checkbox for Provide user access to the AWS Management Console is checked, choose I want to create an IAM user, and click Next. On the Set permissions page, choose Attach policies directly, then search for and select the AdministratorAccess policy. Continue through the remaining steps, and finally clicking the Create user button. After completion, you'll be able to use the new IAM user to log in to the AWS Management Console with full administrative permissions.
+
+| Note |
+|:-----|
+| An IAM user with administrative-level permissions (for example, one attached with the AdministratorAccess policy) can perform most actions across AWS services required in this chapter. While it is generally recommended that IAM users follow the principle of least privilege and have more restrictive permissions, attaching the AdministratorAccess policy to your IAM user will simplify setup and should allow you to complete the hands-on examples in this chapter without permissions-related issues. |
+
+Before proceeding, confirm that your currently selected AWS Region matches the region where your VPC has been set up. You can change the region at any time by using the region selector in the upper-right corner of the AWS Management Console and choosing the correct region (for example, us-east-1) from the dropdown list.
+
 
 ## Running SQL queries in Amazon Athena
 
