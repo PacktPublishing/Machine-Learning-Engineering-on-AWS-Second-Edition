@@ -138,6 +138,16 @@ prompt = """I was born on June 1, 1998, and I am 10 years older than my brother.
 agent(prompt)
 ```
 
+## Links
+
+Here are the links and resources referenced throughout this chapter for your convenience:
+
+- https://aws.amazon.com/free/
+- https://aws.amazon.com/bedrock/pricing/
+- https://aws.amazon.com/sagemaker/ai/pricing/
+- https://www.youtube.com/watch?v=SAeZMA0KaFA
+- https://www.youtube.com/watch?v=1bt11sLo5Pw
+- https://aws.amazon.com/blogs/machine-learning/getting-started-with-cross-region-inference-in-amazon-bedrock/
 
 ## Where to Get Your Copy
 
