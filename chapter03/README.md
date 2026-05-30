@@ -1,5 +1,18 @@
 # Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
 
+In this chapter, you'll learn the fundamentals of machine learning engineering on AWS and use Amazon SageMaker AI to implement end-to-end machine learning workflows. You will train and deploy an XGBoost model, fine-tune a BERT model, and explore how SageMaker AI simplifies training, inference, and model lifecycle management through managed capabilities.
+
+To help you explore how you can use Amazon SageMaker AI to implement end-to-end ML engineering workflows involving both traditional ML models and foundation models, this chapter covers the following sections:
+
+- Setting up and preparing your JupyterLab notebook
+- Preparing a synthetic dataset for binary classification
+- Training an XGBoost binary classifier
+- Deploying an XGBoost model to a real-time inference endpoint
+- Setting up BERT fine-tuning with SageMaker JumpStart
+- Using a smaller dataset for fine-tuning
+- Running the BERT model fine-tuning job
+- Deploying the fine-tuned model to a real-time inference endpoint
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials. 
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
