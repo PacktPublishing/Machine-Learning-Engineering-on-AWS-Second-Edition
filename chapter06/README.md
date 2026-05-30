@@ -1,5 +1,14 @@
 # Chapter 6: Pragmatic Data Processing on AWS
 
+In this chapter, you'll learn how to use SageMaker Processing jobs for resource-intensive data processing workloads. You will run a back-translation workflow using SageMaker Processing, prepare datasets and scripts, and explore best practices for designing, managing, scaling, and securing data processing workflows.
+
+We will cover the following topics in this chapter:
+
+- Getting started with SageMaker Processing jobs
+- Running your first SageMaker Processing job
+- Preparing the input data and script for the back translation job
+- Automating back translation workflows with SageMaker Processing jobs
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
