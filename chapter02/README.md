@@ -1,5 +1,17 @@
 # Chapter 2: Building AI Agents with SageMaker AI and Bedrock AgentCore
 
+In this chapter, you'll learn how to build AI agents that interact with a SageMaker AI real-time inference endpoint. You will use Amazon Bedrock Knowledge Bases and Amazon S3 Vectors to build retrieval-augmented generation powered agents, while also exploring how Strands Agents and Bedrock AgentCore can integrate model inference, external tools, and knowledge retrieval into production-ready agent-based systems.
+
+To help you gain hands-on experience running AI agents with SageMaker AI, Strands Agents, and Bedrock AgentCore, we will cover the following topics in this chapter:
+
+- Deploying a pretrained LLM with SageMaker AI
+- Building AI agents with Amazon SageMaker AI and Strands Agents
+- Building AI agents with Amazon Bedrock AgentCore
+- Deploying production-ready agents with Bedrock AgentCore Runtime
+- Setting up an Amazon Bedrock Knowledge Base
+- Building a RAG-powered AI agent with Strands Agents
+- Building a RAG-powered AI agent that interacts with a SageMaker AI inference endpoint
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials. 
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
