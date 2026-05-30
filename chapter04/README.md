@@ -1,14 +1,14 @@
 # Chapter 4: Modernizing Analytics with a Managed Transactional Data Lake
 
-In this chapter, you'll explore AWS services and capabilities that support data management for analytics and machine learning workloads. You will work with AWS Lake Formation permissions, query data using Amazon Athena, ingest data into Amazon SageMaker Feature Store, and retrieve data from both the online and offline feature stores.
+In this chapter, you'll build and work with a transactional data lake using Amazon S3 tables. You will create an Amazon S3 table bucket, launch an Amazon EMR cluster with Apache Iceberg, run queries using Apache Spark, and explore time travel queries to analyze how datasets evolve over time.
 
-To help you build practical data management skills for modern cloud-based ML workflows, we will cover the following topics in this chapter:
+We will cover the following topics in this chapter:
 
-- Working with AWS Lake Formation permissions
-- Running SQL queries in Amazon Athena
-- Ingesting data into a SageMaker feature store
-- Adding searchable metadata to the features
-- Retrieving data from the online and offline feature stores
+- Preparing and processing the synthetic data
+- Creating an Amazon S3 table bucket
+- Launching an Amazon EMR cluster with Apache Iceberg installed
+- Performing Apache Iceberg queries on S3 tables with Apache Spark
+- Performing time travel queries on S3 tables
 
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
