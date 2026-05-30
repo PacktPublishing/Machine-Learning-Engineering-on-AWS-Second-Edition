@@ -23,6 +23,10 @@ We must have the following ready before we jump into the hands-on examples of th
 - **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
 - **A new AWS account**: Creating and using a new AWS account is highly recommended for the hands-on exercises and solutions in this book. This will ensure that your work-related production (or staging) environment resources remain separate and secure. Feel free to create this AWS account by going to https://aws.amazon.com/free/. On this page, locate and click on the Create an AWS Account button to proceed with the creation of the account. Make sure to read the available AWS documentation along with the relevant FAQ pages to have a better awareness of what is free (and what is not free) when using various services in AWS.
 
+| Note |
+|:-----|
+| In this book, you will work with various resources, including spaces and inference endpoints used throughout the examples. To better understand the potential costs involved, take a moment to review the pricing information for [Amazon Bedrock](https://aws.amazon.com/bedrock/pricing/) and [Amazon SageMaker AI](https://aws.amazon.com/sagemaker/ai/pricing/) before proceeding. |
+
 ## Exploring foundation models in Amazon Bedrock
 
 ```
