@@ -27,6 +27,10 @@ Before proceeding with the hands-on examples in this chapter, ensure that the fo
 - **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
 - **A new IAM user with AdministratorAccess permissions**: You can create this IAM user through the IAM Console, by typing IAM in the search bar, and then selecting IAM from the list of results. Once in the IAM console, select Users from the left-hand menu and then click the Create user button. Enter the desired user name (superadmin), ensure that the checkbox for Provide user access to the AWS Management Console is checked, choose I want to create an IAM user, and click Next. On the Set permissions page, choose Attach policies directly, then search for and select the AdministratorAccess policy. Continue through the remaining steps, and finally clicking the Create user button. After completion, you'll be able to use the new IAM user to log in to the AWS Management Console with full administrative permissions.
 
+| Note |
+|:-----|
+| You will need to sign in using this IAM user account (superadmin) when setting up the Amazon Bedrock knowledge base. Keep in mind that this IAM user has overly permissive permissions (AdministratorAccess), which grants full access to all AWS services and resources. It's recommended to create more restricted IAM users in production environments to follow the principle of least privilege. For now, this should do the trick, so that you can work through the hands-on examples without running into permission issues. |
+
 ## Deploying a Pretrained LLM with SageMaker AI
 
 ```
