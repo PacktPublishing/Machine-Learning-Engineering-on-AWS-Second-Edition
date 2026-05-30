@@ -1,5 +1,17 @@
 # Chapter 8: SageMaker AI Model Deployment Options and Strategies
 
+In this chapter, you'll explore different deployment options and strategies in Amazon SageMaker AI. You will deploy models using real-time, serverless, asynchronous, and batch inference options, while also practicing advanced deployment techniques such as shadow testing, canary traffic shifting, and inference data capture for monitoring and evaluation.
+
+This chapter covers the following topics:
+
+- Preparing your JupyterLab Notebook for model deployment
+- Deploying your model to a real-time inference endpoint
+- Deploying your model to a serverless inference endpoint
+- Running batch inference with batch transform
+- Deploying your model to an asynchronous inference endpoint
+- Setting up a shadow test with a SageMaker inference endpoint
+- Using canary traffic shifting when performing blue/green deployments
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
