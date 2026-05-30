@@ -19,6 +19,19 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical requirements
+
+Before proceeding with the hands-on examples in this chapter, confirm that the following prerequisites and setup requirements have been addressed:
+
+- When launching training jobs or deploying models, ensure that the applied account-level quota value for the selected ML instance types (for example, ml.p3.2xlarge for training job usage) is set to at least 1. If the quota value is 0, SageMaker AI will not be able to provision the required compute resources, and the job or endpoint creation will fail. You can review and request quota increases through the Service Quotas console (within the AWS Management Console).
+- To enable live logging while using the SageMaker Python SDK for model deployments, ensure that the execution role (for example, AmazonSageMaker-ExecutionRole-...) has the appropriate permissions. You can attach the CloudWatchFullAccessV2 policy (or a more granular alternative) to the role.
+
+| Note |
+|:-----|
+| Since the role can have a maximum of 10 policies, you may need to remove AmazonSageMakerCanvasSMDataScienceAssistantAccess if it is not needed. |
+
+It is recommended to use an AWS Identity and Access Management (IAM) user with limited permissions instead of the root account when running the examples in this book. We will discuss this, along with other security best practices, in detail towards the end of this book. If you are just starting to use AWS, you may proceed with using the root account in the meantime.
+
 ## Setting up and preparing your JupyterLab notebook
 
 ```
