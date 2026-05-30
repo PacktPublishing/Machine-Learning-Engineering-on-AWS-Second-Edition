@@ -18,6 +18,20 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical Requirements
+
+Before proceeding with the hands-on examples in this chapter, confirm that the following prerequisites and setup requirements have been addressed:
+
+- **Sufficient account-level quota for selected ML instance types**: When deploying models, ensure that the applied account-level quota value for the selected ML instance types (for example, ml.m5.xlarge for endpoint usage , ml.m5.xlarge for transform job usage, and ml.m5.large for endpoint usage) is set to at least 2. If the quota value is 0, SageMaker AI will not be able to provision the required compute resources, and the job or endpoint creation will fail. You can review and request quota increases through the Service Quotas console (within the AWS Management Console).
+
+- **An existing SageMaker Studio space**: You can use the SageMaker Studio space (mle-on-aws-space) that you set up in Chapter 1 to follow along with the examples in this book.
+
+- **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
+
+| Note |
+|:-----|
+| It is recommended to use an IAM user with limited permissions instead of the root account when running the examples in this book. We will discuss this, along with other security best practices, in detail towards the end of this book. If you are just starting to use AWS, you may proceed with using the root account in the meantime. |
+
 ## Preparing your JupyterLab Notebook for Model Deployment
 
 ```
