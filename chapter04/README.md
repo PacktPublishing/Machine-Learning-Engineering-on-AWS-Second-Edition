@@ -16,6 +16,16 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical requirements
+
+Before working through the hands-on examples in this chapter and the next, make sure that all required technical prerequisites are properly set up and configured. Make sure you have the following prerequisites ready:
+
+- **A text file where you can store important resource identifiers and configuration values**: You will use this file to keep track of key details such as your Amazon S3 general-purpose bucket name (TAG:DATASET_BUCKET), your S3 table bucket name (TAG:TABLE_BUCKET_NAME), the EC2 instance profile associated with your Amazon EMR cluster, and the primary node public DNS address of your EMR cluster. For instance, after uploading your CSV and Parquet datasets to your S3 general-purpose bucket, you'll be recording the bucket name in this file so you can easily reference it later when performing Apache Iceberg queries on S3 tables with Apache Spark.
+- **A Virtual Private Cloud (VPC) network environment with at least two public subnets**:  A VPC is a logically isolated virtual network in AWS that allows you to define and control your network settings. Inside a VPC, you can deploy and run AWS resources such as EC2 instances, databases, and other resources while controlling access and security. You can set up and configure this VPC network in the AWS Management Console by typing vpc in the search bar and selecting VPC from the search results. In the VPC console, click the Create VPC button, then select the VPC and more option. Specify the number of public and private subnets you require (that is, 2 public subnets and 0 private subnets), and proceed through the configuration steps. You will use this VPC later in the chapter when setting up an Amazon EMR cluster.
+
+Before proceeding, confirm that your currently selected AWS Region matches the region where your VPC has been set up. You can change the region at any time by using the region selector in the upper-right corner of the AWS Management Console and choosing the correct region (for example, us-east-1) from the dropdown list.
+
+
 ## Preparing and processing the synthetic data
 
 ### Downloading and preparing the synthetic tabular data
