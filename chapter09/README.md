@@ -1,5 +1,17 @@
 # Chapter 9: Automating LLMOps Workflows with SageMaker Pipelines
 
+In this chapter, you'll design and operationalize LLMOps pipelines using SageMaker Pipelines. You will build single-step and multi-step workflows, integrate AWS Lambda-based orchestration steps, and learn best practices for building scalable, maintainable, secure, and cost-efficient production-grade machine learning pipelines.
+
+This chapter covers the following topics:
+
+- Setting up the project environment and dependencies
+- Building and Running the Single-Step Fine-Tuning Pipeline
+- Building and Running the Single-Step Evaluation Pipeline
+- Configuring and Running a Two-Step Fine-Tuning and Evaluation Pipeline
+- Preparing the Lambda functions for deploying a model to an endpoint
+- Completing the LLMOps pipeline
+- Best Practices and Key Considerations for Building Automated ML Workflows
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
