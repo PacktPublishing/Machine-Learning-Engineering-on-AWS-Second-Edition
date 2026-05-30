@@ -18,6 +18,44 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical Requirements
+
+Before proceeding with the hands-on examples in this chapter, confirm that the following prerequisites and setup requirements have been addressed:
+
+- **Sufficient account-level quota for selected ML instance types**: Ensure that your AWS account has the required applied account-level quota values for the SageMaker AI ML instance types used in this chapter. You should have at least 2× ml.g5.4xlarge for the real-time inference endpoint (ml.g5.4xlarge for endpoint usage), and at least 2× ml.m5.xlarge for processing job usage and pipeline execution workloads (ml.m5.xlarge for processing job usage). You can review and adjust these limits in the Service Quotas console in the AWS Management Console.
+
+- **An existing SageMaker Studio space**: You can use the SageMaker Studio space (mle-on-aws-space) that you set up in Chapter 1 to follow along with the examples in this book. You may upgrade the space to an ml.m5.xlarge instance type and allocate a minimum of 100 GB of storage to properly support the compute and data requirements of the hands-on exercises.
+
+- **A code editor installed on your local machine (such as Visual Studio Code or Sublime Text)**: You'll need this when working with the code and configuration files used throughout the hands-on exercises and examples in this book.
+
+- **Updated space execution role trust relationship configuration**: Ensure that the execution role attached to your SageMaker Studio space allows both SageMaker AI and Amazon Bedrock to assume the role. This is required because the workflows and evaluation jobs used throughout this chapter rely on SageMaker AI processing jobs and Bedrock-powered LLM-as-a-Judge evaluation capabilities. The trust policy for the execution role should include the following configuration:
+
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": [
+                        "sagemaker.amazonaws.com",
+                        "bedrock.amazonaws.com"
+                    ]
+                },
+                "Action": "sts:AssumeRole"
+            }
+        ]
+    }
+    ```
+    
+    If the execution role does not include these trusted service principals, processing jobs, pipeline executions, or evaluation tasks may fail when attempting to access SageMaker AI or Amazon Bedrock resources. You can review and update the trust relationship configuration from the IAM console in the AWS Management Console.
+
+- **Updated execution role permissions for SageMaker Studio space**: Ensure that the execution role attached to your SageMaker Studio space includes the required service permissions for running end-to-end LLMOps workflows. In addition to the correct trust relationship for SageMaker AI and Amazon Bedrock, the role must also include the following managed policies: AmazonBedrockFullAccess, AmazonS3FullAccess, AmazonSageMakerFullAccess, AWSLambda_FullAccess, and CloudWatchFullAccessV2. You can review and update the IAM permissions attached to the execution role from the IAM console in the AWS Management Console.
+
+| Note |
+|:-----|
+| While working on the examples of this chapter, you may optionally use AdministratorAccess to reduce permission-related errors and simplify setup. Keep in mind that the IAM roles configuration used across the chapter is overly permissive and should not be used in production environments without further refinement and restriction of permissions. |
+
 ## Setting Up the Project Environment and Dependencies
 
 ```
