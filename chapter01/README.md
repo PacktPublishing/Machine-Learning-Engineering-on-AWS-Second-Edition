@@ -1,5 +1,15 @@
 # Chapter 1: A Gentle Introduction to Generative AI and AI Agents on AWS
 
+In this chapter, you'll explore the fundamentals of generative AI on AWS and learn how to use various services and solutions to build AI agents. You will work with foundation models provided through Amazon Bedrock, cover key concepts and terminology, set up a SageMaker Studio space, and build your first AI agent using Strands Agents with tool integrations to enhance reasoning and problem-solving capabilities.
+
+We will cover the following topics in this chapter:
+
+- Generative AI for the modern machine learning engineer
+- Exploring foundation models in Amazon Bedrock
+- Setting up and configuring your SageMaker Studio environment
+- Configuring IAM permissions for your SageMaker Studio Space
+- Introduction to AI agents with Amazon Bedrock and Strands Agents
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials. 
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
