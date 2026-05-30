@@ -266,10 +266,9 @@ This chapter covers the following topics:
 
 Years ago, he led a team that won first place in a global cybersecurity competition for their published research. He is also an AWS AI Hero and has spoken at several international conferences on practical applications of generative AI, software engineering, cybersecurity, and management.
 
-## Other books by the author
+## Other Books by the Author
 
-<a href="https://www.packtpub.com/product/machine-learning-with-amazon-sagemaker-cookbook/9781800567030"><img src="https://static.packt-cdn.com/products/9781800567030/cover/smaller" alt="Machine Learning with Amazon SageMaker Cookbook" width="20%" height="250px"></a>
-<a href="https://www.packtpub.com/product/machine-learning-engineering-on-aws/9781803247595"><img src="https://static.packt-cdn.com/products/9781803247595/cover/smaller" alt="Machine Learning Engineering on AWS" width="20%" height="250px"></a>
-<a href="https://www.packtpub.com/product/building-and-automating-penetration-testing-labs-in-the-cloud/9781837632398"><img src="https://static.packt-cdn.com/products/9781837632398/cover/smaller" alt="Building and Automating Penetration Testing Labs in the Cloud" width="20%" height="250px"></a>
-<a href="https://www.oreilly.com/library/view/learning-serverless-security/9781098149000/"><img src="https://www.oreilly.com/covers/urn:orm:book:9781098149000/296w/?format=webp" alt="Learning Serverless Security" width="20%" height="250px"></a>
+You can find the author's other books on AI and Cybersecurity by visiting the [Amazon Author Page](https://amazon.com/author/arvs)
+
+![Other 4 books](previous-books.png)
 
