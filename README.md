@@ -267,11 +267,8 @@ This chapter covers the following topics:
 
 ![Machine Learning Engineering on AWS 2nd ed](arvs-machine-learning-engineering-on-aws.png)
 
-Years ago, he led a team that won first place in a global cybersecurity competition for their published research. He is also an AWS AI Hero and has spoken at several international conferences on practical applications of generative AI, software engineering, cybersecurity, and management.
+Years ago, he led a team that won first place in a global cybersecurity competition for their published research. He is also an AWS AI Hero and has spoken at several international conferences on practical applications of generative AI, software engineering, cybersecurity, and management. To give back to the technology community, he has authored five books covering artificial intelligence, cloud computing, and cybersecurity.
 
-## Other Books by the Author
+![The author's books](5-books.png)
 
 You can find the author's other books on AI and Cybersecurity by visiting the [Amazon Author Page](https://amazon.com/author/arvs)
-
-![Other 4 books](previous-books.png)
-
