@@ -1,5 +1,15 @@
 # Chapter 4: Modernizing Analytics with a Managed Transactional Data Lake
 
+In this chapter, you'll explore AWS services and capabilities that support data management for analytics and machine learning workloads. You will work with AWS Lake Formation permissions, query data using Amazon Athena, ingest data into Amazon SageMaker Feature Store, and retrieve data from both the online and offline feature stores.
+
+To help you build practical data management skills for modern cloud-based ML workflows, we will cover the following topics in this chapter:
+
+- Working with AWS Lake Formation permissions
+- Running SQL queries in Amazon Athena
+- Ingesting data into a SageMaker feature store
+- Adding searchable metadata to the features
+- Retrieving data from the online and offline feature stores
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
