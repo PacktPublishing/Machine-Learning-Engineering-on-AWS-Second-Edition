@@ -15,6 +15,21 @@ This README.md file contains the commands and code snippets referenced in a chap
 
 To help you get started more easily, the repository includes a [DETAILS.md](https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md) file containing additional guidance, references, and important notes for the examples discussed throughout the book.
 
+## Technical requirements
+
+Before we start, we must have the following ready:
+
+- The SageMaker notebook instance set up from Chapter 5, Practical Data Management on AWS, configured with the required IAM role (SageMakerAdminRole). Make sure to start the notebook instance before working on the hands-on portion of this chapter.
+  
+- Applied account-level quota value under ml.p3.2xlarge for processing job usage to be 2 (or above). You can review and request quota increases through the Service Quotas console (within the AWS Management Console). To view the applied quota values and perform the required quota increase request for the ml.p3.2xlarge for processing job usage applied account-level quota value, simply navigate to the link https://us-east-1.console.aws.amazon.com/servicequotas/home/services/sagemaker/quotas and locate the quota value to be increased.
+  
+- Applied account-level quota value under ml.m5.xlarge for processing job usage to be 2 (or above).
+
+| Note |
+|:-----|
+| When requesting or verifying the quota, make sure that you select "ml.m5.xlarge for processing job usage" (or "ml.p3.2xlarge for processing job usage" if you plan to use GPU-based instances). SageMaker provides several instance-level quota categories, such as cluster usage, cluster spot instance usage, endpoint usage, notebook instance usage, processing job usage, spot training usage, and training job usage. Since this chapter focuses on SageMaker Processing jobs, ensure that you modify the quota specifically for the processing job usage category for the appropriate instance type rather than the other categories. |
+
+
 ## Running your first SageMaker Processing job
 
 ```
