@@ -1,5 +1,15 @@
 # Chapter 7: SageMaker AI Model Training and Tuning Capabilities
 
+In this chapter, you'll fine-tune a large language model using Amazon SageMaker AI as part of an end-to-end machine learning workflow. You will track experiments using MLflow, execute supervised fine-tuning jobs, perform hyperparameter tuning to identify the best-performing model, and deploy the final model to a real-time inference endpoint.
+
+We will cover the following topics in this chapter:
+
+- Setting up a serverless MLflow App
+- Fine-tuning an LLM on Amazon SageMaker AI
+- Deploying the Fine-Tuned Model
+- Performing Hyperparameter Tuning with Amazon SageMaker AI
+- Deploying the Best-Performing Model from Hyperparameter Tuning
+
 This README.md file contains the commands and code snippets referenced in a chapter of *Machine Learning Engineering on AWS — Second Edition* by Joshua Arvin Lat, published by Packt. It is intended to support the examples in the book by making it simpler for you to copy, run, and modify the provided materials.
 
 ![Machine Learning Engineering on AWS 2nd ed](../books.png)
