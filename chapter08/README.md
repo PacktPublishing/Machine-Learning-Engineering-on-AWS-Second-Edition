@@ -1057,6 +1057,13 @@ for model in models:
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference-monitor.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model-get-started.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/deployment-guardrails.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/best-practices.html
+
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
