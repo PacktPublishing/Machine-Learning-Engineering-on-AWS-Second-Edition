@@ -408,7 +408,7 @@ ___
   <tr>
     <td align="center">
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05">
-        CHAPTER 04
+        CHAPTER 05
       </a>
     </td>
     <td align="center">
@@ -418,7 +418,7 @@ ___
     </td>
     <td align="center">
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07">
-        CHAPTER 06
+        CHAPTER 07
       </a>
     </td>
   </tr>
