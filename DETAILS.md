@@ -35,11 +35,12 @@ We will cover the following topics in this chapter:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -63,11 +64,12 @@ To help you gain hands-on experience running AI agents with SageMaker AI, Strand
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -92,11 +94,12 @@ To help you explore how you can use Amazon SageMaker AI to implement end-to-end 
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -118,11 +121,12 @@ We will cover the following topics in this chapter:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -144,11 +148,12 @@ To help you build practical data management skills for modern cloud-based ML wor
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -169,11 +174,12 @@ We will cover the following topics in this chapter:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -195,11 +201,12 @@ We will cover the following topics in this chapter:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -223,11 +230,12 @@ This chapter covers the following topics:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
@@ -251,11 +259,12 @@ This chapter covers the following topics:
 
 <table>
   <tr>
-    <td>Files</td>
     <td>
+      &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09
       </a>
+      &nbsp;&nbsp;
     </td>
   </tr>
 </table>
