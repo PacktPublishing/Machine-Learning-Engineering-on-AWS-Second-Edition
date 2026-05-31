@@ -648,6 +648,13 @@ feature_group.delete()
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://docs.aws.amazon.com/athena/latest/ug/other-notable-limitations.html
+- https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg.html
+- https://docs.aws.amazon.com/athena/latest/ug/understanding-tables-databases-and-the-data-catalog.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-integrating-athena.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store-add-metadata.html
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
