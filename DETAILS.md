@@ -38,7 +38,7 @@ We will cover the following topics in this chapter:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter01
+        CHAPTER 01 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -67,7 +67,7 @@ To help you gain hands-on experience running AI agents with SageMaker AI, Strand
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02
+        CHAPTER 02 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -97,7 +97,7 @@ To help you explore how you can use Amazon SageMaker AI to implement end-to-end 
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter03
+        CHAPTER 03 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -124,7 +124,7 @@ We will cover the following topics in this chapter:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04
+        CHAPTER 04 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -151,7 +151,7 @@ To help you build practical data management skills for modern cloud-based ML wor
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter05
+        CHAPTER 05 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -177,7 +177,7 @@ We will cover the following topics in this chapter:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
+        CHAPTER 06 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -204,7 +204,7 @@ We will cover the following topics in this chapter:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter07
+        CHAPTER 07 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -233,7 +233,7 @@ This chapter covers the following topics:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08
+        CHAPTER 08 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
@@ -262,7 +262,7 @@ This chapter covers the following topics:
     <td>
       &nbsp;➤&nbsp;&nbsp;&nbsp;
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter09
+        CHAPTER 09 — README.md
       </a>
       &nbsp;&nbsp;
     </td>
