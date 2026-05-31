@@ -383,6 +383,13 @@ dl_path = s3_output.s3_uri + "/output.csv"
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://us-east-1.console.aws.amazon.com/servicequotas/home/services/sagemaker/quotas
+- https://huggingface.co/Helsinki-NLP/opus-mt-tl-en
+- https://docs.aws.amazon.com/sagemaker/latest/dg/processing-job.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/build-your-own-processing-container.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-processing-job-run.html
+- https://huggingface.co/Helsinki-NLP
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
