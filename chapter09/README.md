@@ -1600,6 +1600,13 @@ sm.delete_endpoint(
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines.html
+- https://sagemaker.readthedocs.io/en/v3docs/ml_ops/
+- https://aws.amazon.com/blogs/machine-learning/llm-as-a-judge-on-amazon-bedrock-model-evaluation/
+- https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-prompt-management-is-now-available-in-ga/
+- https://docs.aws.amazon.com/sagemaker/latest/dg/best-practices.html
+- https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
