@@ -1056,6 +1056,15 @@ predictor.delete()
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://docs.aws.amazon.com/boto3/latest/reference/services/sagemaker/client/create_mlflow_app.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/mlflow.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/train-model.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html
+- https://aws.amazon.com/blogs/machine-learning/advanced-fine-tuning-methods-on-amazon-sagemaker-ai/
+- https://sagemaker.readthedocs.io/en/stable/model_customization/index.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
