@@ -1045,6 +1045,8 @@ train_processor = ScriptProcessor(
 ```
 
 ```
+from sagemaker.mlops.workflow.steps import CacheConfig
+
 cache_config = CacheConfig(
     enable_caching=True, 
     expire_after="PT12H"
