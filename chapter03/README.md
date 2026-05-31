@@ -914,6 +914,14 @@ endpoint.delete()
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://sagemaker.readthedocs.io/en/stable/
+- https://github.com/dmlc/xgboost/blob/master/doc/parameter.rst
+- https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-metrics-validation.html
+- https://github.com/aws/sagemaker-python-sdk
+- https://sagemaker.readthedocs.io/en/stable/
+- https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-prog-model.html
+- https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/sagemaker/
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
