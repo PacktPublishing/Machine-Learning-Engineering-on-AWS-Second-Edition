@@ -947,4 +947,12 @@ ___
       </a>
     </td>
   </tr>
+  <tr>
+    <td>HOME</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md">
+        DETAILS.md
+      </a>
+    </td>
+  </tr>
 </table>
