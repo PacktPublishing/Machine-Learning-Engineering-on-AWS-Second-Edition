@@ -73,6 +73,7 @@ To help you gain hands-on experience running AI agents with SageMaker AI, Strand
     </td>
   </tr>
 </table>
+
 ## Chapter 3: Machine Learning Engineering with Amazon SageMaker AI
 
 In this chapter, you'll learn the fundamentals of machine learning engineering on AWS and use Amazon SageMaker AI to implement end-to-end machine learning workflows. You will train and deploy an XGBoost model, fine-tune a BERT model, and explore how SageMaker AI simplifies training, inference, and model lifecycle management through managed capabilities.
