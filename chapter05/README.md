@@ -661,3 +661,24 @@ Years ago, he led a team that won first place in a global cybersecurity competit
 You can find the author's other books on AI and Cybersecurity by visiting the [Amazon Author Page](https://amazon.com/author/arvs)
 
 ![Other 4 books](../previous-books.png)
+
+___
+
+<table>
+  <tr>
+    <td>PREVIOUS</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>NEXT</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
+        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
+      </a>
+    </td>
+  </tr>
+</table>
