@@ -328,9 +328,6 @@ s3_model_path = f"s3://{s3_bucket}/model/model.tar.gz"
 
 ```
 %store s3_model_path
-```
-
-```
 %store s3_bucket
 ```
 
@@ -354,9 +351,6 @@ from sagemaker.core.helper.session_helper import (
 )
 
 role = get_execution_role()
-```
-
-```
 %store role
 ```
 
