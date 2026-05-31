@@ -1074,18 +1074,24 @@ ___
 
 <table>
   <tr>
-    <td>PREVIOUS</td>
-    <td>
-      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
-      </a>
-    </td>
+    <th align="center" width="200px">◀ PREVIOUS</th>
+    <th align="center" width="200px">HOME</th>
+    <th align="center" width="200px">NEXT ▶</th>
   </tr>
   <tr>
-    <td>NEXT</td>
-    <td>
+    <td align="center">
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
+        CHAPTER 06
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md">
+        DETAILS.md
+      </a>
+    </td>
+    <td align="center">
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter08
+        CHAPTER 08
       </a>
     </td>
   </tr>
