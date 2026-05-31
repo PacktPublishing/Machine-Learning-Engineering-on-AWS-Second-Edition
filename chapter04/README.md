@@ -363,6 +363,14 @@ LIMIT 30
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-integration-overview.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-naming.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-integrating-emr.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-integration-overview.html
+- https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance-overview.html
+- https://www.youtube.com/watch?v=qIsxBWfVgsM
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
