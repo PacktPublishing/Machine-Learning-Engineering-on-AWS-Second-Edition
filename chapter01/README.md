@@ -188,7 +188,7 @@ ___
 
 <table>
   <tr>
-    <td>NEXT CHAPTER</td>
+    <td>NEXT</td>
     <td>
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02">
         https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter02
