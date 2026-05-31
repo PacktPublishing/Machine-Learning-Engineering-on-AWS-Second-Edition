@@ -669,7 +669,7 @@ ___
     <td>PREVIOUS</td>
     <td>
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter04
+        CHAPTER 04
       </a>
     </td>
   </tr>
@@ -677,7 +677,15 @@ ___
     <td>NEXT</td>
     <td>
       <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06">
-        https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/tree/main/chapter06
+        CHAPTER 06
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>HOME</td>
+    <td>
+      <a href="https://github.com/PacktPublishing/Machine-Learning-Engineering-on-AWS-Second-Edition/blob/main/DETAILS.md">
+        DETAILS.md
       </a>
     </td>
   </tr>
