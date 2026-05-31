@@ -702,6 +702,17 @@ python main.py
 
 Here are the links and resources referenced throughout this chapter for your convenience:
 
+- https://aws.amazon.com/sagemaker/ai/pricing/#Instance_details
+- https://docs.aws.amazon.com/decision-guides/latest/bedrock-or-sagemaker/bedrock-or-sagemaker.html
+- https://strandsagents.com/docs/user-guide/concepts/model-providers/
+- https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html
+- https://docs.aws.amazon.com/sagemaker/latest/dg/deploy-model.html
+- https://strandsagents.com/docs/user-guide/quickstart/overview/
+- https://strandsagents.com/docs/user-guide/concepts/tools/
+- https://docs.aws.amazon.com/bedrock/latest/userguide/kb-how-it-works.html
+- https://arxiv.org/abs/2312.10997
+- https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-get-started-cli.html
+
 ## Where to Get Your Copy
 
 You can grab your copy of *Machine Learning Engineering on AWS — Second Edition* through popular online retailers such as [Amazon](https://amazon.com/author/arvs) or directly from the publisher, [Packt](https://www.packtpub.com/en-us/product/machine-learning-engineering-on-aws-9781835881088). Feel free to choose the format that works best for you. 🙏
